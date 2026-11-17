@@ -100,6 +100,15 @@ jest.unstable_mockModule('../../src/config/deepseek.js', () => ({
   modeloDeepSeek: 'deepseek-chat',
 }));
 
+// Embeddings simulados: vectores de ceros (no descarga el modelo en las pruebas)
+jest.unstable_mockModule('../../src/rag/embeddings.js', () => ({
+  MODELO_EMBEDDINGS: 'simulado',
+  DIMENSIONES: 384,
+  vectorizarFragmentos: async (textos) => textos.map(() => new Array(384).fill(0)),
+  vectorizarPregunta: async () => new Array(384).fill(0),
+  aTextoVector: (v) => `[${v.join(',')}]`,
+}));
+
 /** Respuesta con forma de chat completion de DeepSeek. */
 export function respuestaModelo(contenido) {
   return { choices: [{ message: { content: contenido } }] };

@@ -32,17 +32,17 @@ Esta tabla es la fuente de verdad. Lo que no esté marcado como **Hecho** no fun
 | Dashboard con KPIs, tendencia 30 días, 2 gráficos, pendientes, resumen e historial | ✅ Hecho |
 | Chat con respuestas, intención y latencia | ✅ Hecho |
 | Login con roles, CORS, latencia (`X-Latencia-Ms`), errores sin filtrar detalles | ✅ Hecho |
-| Agente de **políticas (RAG)**: responder con citas de documentos | ❌ Pendiente |
-| Documentos de políticas (≥10) y documento de investigación en Drive | ❌ Pendiente |
-| Sincronización con Drive (`changes.list`, nuevos/editados/borrados) | ❌ Pendiente |
-| Embeddings y fragmentos en pgvector (la extensión sí está activa) | ❌ Pendiente |
+| Agente de **políticas (RAG)**: responder solo con fragmentos de Drive y citar documento y punto | ✅ Hecho: 147 fragmentos indexados; umbral de similitud 0.84 (provisional) |
+| Documentos de políticas (≥10) en Drive | ✅ Hecho: 11 archivos verificados (`npm run drive:verify`); investigación en `docs/investigacion-rrhh.md` |
+| Sincronización con Drive: nuevos, editados y borrados | ✅ Hecho: incremental por `modifiedTime` (`npm run rag:ingesta`); `changes.list` pendiente de usar |
+| Embeddings y fragmentos en pgvector | ✅ Hecho: `multilingual-e5-small` (384 dim.), migración 003, índice HNSW |
 | Pagos (pregunta 9) y evaluaciones (pregunta 17) respondidas por el agente de datos | ⚠️ Datos cargados; el agente aún no los consulta |
 | Usuario de solo lectura para el agente de datos (`agente_lectura`) | ✅ Hecho: solo `SELECT`, sujeto a RLS; la contraseña se generó y se guardó solo en `backend/.env` |
 | Agente de escalamiento con tickets (punto extra) | ❌ Pendiente |
 | Banco de 45 preguntas evaluado y resultados | ❌ Pendiente (ver `docs/hoja-evaluacion.md`) |
 | Informe técnico 8–12 páginas, diagrama, video de demo | ⚠️ Borrador (`docs/informe-tecnico.md`); diagrama y video pendientes |
 
-**Lo más importante que falta** es el RAG con Drive: sin él el chat no responde políticas, y ahí están 45 de los 100 puntos de la rúbrica.
+**Lo más importante que falta** es calibrar el RAG con el banco de 45 preguntas y completar la hoja de evaluación; el umbral de similitud es provisional.
 
 ---
 
@@ -58,7 +58,7 @@ backend/
     routes/             solo declaran endpoints y middlewares
     controllers/        HTTP: validan la entrada y llaman a services / agents / jobs
     services/           acceso a datos (SQL parametrizado, filtrado por el id autenticado)
-    agents/             orquestador, guardrails, agente de datos, agente de políticas (pendiente), analista
+    agents/             orquestador, guardrails, agente de datos, agente de políticas (RAG), analista
     jobs/               generación del reporte y programador de las 7:00 a. m.
   scripts/aplicar-sql.js  Aplica archivos SQL a la base de DATABASE_URL
   tests/                Jest + Supertest (unitarias e integración)
@@ -82,7 +82,7 @@ docs/
   hoja-evaluacion.md         Banco de 45 preguntas con respuesta esperada y resultado
   diagrama-arquitectura.md   Diagramas: componentes, flujo de consulta, reporte diario y modelo de datos
   politicas/                 10 documentos de política (uno por dominio) + calendario-2026.csv
-  prompts/                   Prompts de cada agente, versionados (pendiente: agente de políticas)
+  prompts/                   Prompts de cada agente, versionados
 README.md
 ```
 

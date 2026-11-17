@@ -13,9 +13,11 @@
     "start": "node src/server.js",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "test:watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watch",
-    "drive:verify": "node scripts/drive-verify.js"
+    "drive:verify": "node scripts/drive-verify.js",
+    "rag:ingesta": "node scripts/rag-ingesta.js"
   },
   "dependencies": {
+    "@huggingface/transformers": "^4.3.2",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^5.1.0",

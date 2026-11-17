@@ -26,18 +26,42 @@ function normalizarLinea(linea) {
     .trimEnd();
 }
 
-/** Parsea CSV simple (sin comillas multilínea): suficiente para calendario-2026.csv. */
+/** Separa una línea CSV respetando campos entre comillas ("Aguinaldo, planilla"). */
+function separarLineaCsv(linea) {
+  const campos = [];
+  let actual = '';
+  let entreComillas = false;
+  for (let i = 0; i < linea.length; i++) {
+    const c = linea[i];
+    if (c === '"') {
+      if (entreComillas && linea[i + 1] === '"') {
+        actual += '"';
+        i++;
+      } else {
+        entreComillas = !entreComillas;
+      }
+    } else if (c === ',' && !entreComillas) {
+      campos.push(actual.trim());
+      actual = '';
+    } else {
+      actual += c;
+    }
+  }
+  campos.push(actual.trim());
+  return campos;
+}
+
+/** Parsea CSV con cabecera (comillas incluidas). Filas en blanco se ignoran. */
 export function parsearCsv(texto) {
   const [cabecera, ...filas] = texto.trim().split(/\r?\n/);
-  const columnas = cabecera.split(',').map((c) => c.trim());
+  const columnas = separarLineaCsv(cabecera);
   return filas
     .filter((f) => f.trim() !== '')
     .map((f) => {
-      const valores = f.split(',');
+      const valores = separarLineaCsv(f);
       const fila = {};
       columnas.forEach((col, i) => {
-        // La última columna puede contener comas: se vuelve a unir
-        fila[col] = i === columnas.length - 1 ? valores.slice(i).join(',').trim() : (valores[i] ?? '').trim();
+        fila[col] = valores[i] ?? '';
       });
       return fila;
     });
