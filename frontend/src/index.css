@@ -1,0 +1,177 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==========================================================================
+   TOKENS DE TEMA
+   Paleta de cinco colores, con una sola función por color:
+     1. Base (canvas / superficies): neutros pizarra, sin tintes.
+     2. Primario (cian):        acciones principales y elementos activos.
+     3. Secundario (índigo):    profundidad, capas y elementos de IA.
+     4. Éxito (esmeralda):      estados correctos y datos activos.
+     5. Atención (ámbar):       pendientes, avisos y estados "en preparación".
+   El rosa queda reservado para errores y bloqueos. Valores en RGB para poder usar opacidad.
+   Modo noche por defecto; modo día con data-theme="light" en <html>.
+   ========================================================================== */
+:root,
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --canvas: 7 9 14;             /* #07090E  Midnight Slate */
+  --surface: 15 23 42;          /* slate-900 */
+  --line: 255 255 255;          /* bordes: blanco con opacidad */
+  --ink: 241 245 249;           /* slate-100 */
+  --ink-muted: 148 163 184;     /* slate-400 */
+  --ink-subtle: 100 116 139;    /* slate-500 */
+  --accent-cyan: 6 182 212;     /* #06b6d4 Electric Cyan */
+  --accent-indigo: 129 140 248; /* #818cf8 índigo suavizado para texto legible */
+  --accent-emerald: 52 211 153; /* #34d399 esmeralda suavizado */
+  --accent-amber: 251 191 36;   /* #fbbf24 */
+  --accent-rose: 251 113 133;   /* #fb7185 (solo errores y bloqueos) */
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+  --canvas: 248 250 252;        /* #F8FAFC Crisp Slate */
+  --surface: 255 255 255;       /* superficies blancas translúcidas */
+  --line: 15 23 42;             /* bordes: slate-900 con opacidad */
+  --ink: 15 23 42;              /* #0F172A texto de alto contraste */
+  --ink-muted: 71 85 105;       /* slate-600, AA sobre blanco */
+  --ink-subtle: 100 116 139;    /* slate-500 */
+  --accent-cyan: 3 105 161;     /* #0369a1 sky-700: azul corporativo legible */
+  --accent-indigo: 67 56 202;   /* #4338ca indigo-700 */
+  --accent-emerald: 4 120 87;   /* #047857 emerald-700 */
+  --accent-amber: 180 83 9;     /* #b45309 amber-700 */
+  --accent-rose: 190 18 60;     /* #be123c rose-700 */
+}
+
+html {
+  scroll-behavior: smooth;
+  transition: background-color 0.4s ease;
+}
+
+body {
+  @apply min-h-screen bg-canvas font-sans text-ink antialiased transition-colors duration-500;
+}
+
+/* ==========================================================================
+   COMPONENTES
+   ========================================================================== */
+@layer components {
+  /* Superficie glassmorphism: oscura en noche, blanca translúcida en día */
+  .surface {
+    @apply relative overflow-hidden rounded-2xl border border-line/10 bg-surface/60 shadow-xl backdrop-blur-xl transition-colors duration-500;
+  }
+  :root[data-theme='light'] .surface {
+    @apply bg-surface/85 shadow-[0_12px_32px_-18px_rgba(15,23,42,0.18)];
+  }
+  .surface::before {
+    content: '';
+    @apply pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-line/20 to-transparent;
+  }
+
+  /* Elevación al pasar el cursor */
+  .card-3d {
+    @apply transition-[transform,box-shadow,border-color] duration-500 ease-out;
+    transform-style: preserve-3d;
+  }
+  .card-3d:hover {
+    @apply border-brand-cyan/35;
+    transform: translateY(-4px) rotateX(2deg);
+    box-shadow: 0 24px 48px -28px rgba(6, 182, 212, 0.3), 0 10px 20px -14px rgba(15, 23, 42, 0.25);
+  }
+
+  /* Halo sutil que sigue al cursor */
+  .spotlight::after {
+    content: '';
+    @apply pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500;
+    background: radial-gradient(320px circle at var(--mx, 50%) var(--my, 50%), rgba(129, 140, 248, 0.12), transparent 60%);
+  }
+  .spotlight:hover::after {
+    @apply opacity-100;
+  }
+
+  /* Degradado de marca: se usa solo en titulares destacados */
+  .text-gradient {
+    @apply bg-gradient-to-r from-brand-cyan to-brand-indigo bg-clip-text text-transparent;
+  }
+
+  .input-glass {
+    @apply w-full rounded-xl border border-line/10 bg-surface/60 px-4 py-3 text-ink placeholder-ink-subtle outline-none transition duration-300 focus:border-brand-cyan/60 focus:ring-2 focus:ring-brand-cyan/20;
+  }
+
+  /* Botón principal: cian a índigo, sin brillo de neón */
+  .btn-primary {
+    @apply relative inline-flex items-center justify-center overflow-hidden rounded-xl bg-gradient-to-r from-brand-cyan to-brand-indigo px-5 py-2.5 font-medium text-white shadow-md transition duration-300 hover:brightness-110 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40;
+  }
+
+  .btn-ghost {
+    @apply rounded-xl border border-line/10 px-4 py-2 text-sm text-ink-muted transition duration-300 hover:border-line/20 hover:bg-line/5 hover:text-ink;
+  }
+
+  .ambient {
+    @apply pointer-events-none fixed inset-0 -z-10 overflow-hidden;
+  }
+  .ambient span {
+    @apply absolute rounded-full blur-3xl animate-drift;
+  }
+  :root[data-theme='light'] .ambient span {
+    @apply opacity-40;
+  }
+
+  .nav-active-dot {
+    @apply bg-brand-emerald shadow-[0_0_8px_1px_rgba(52,211,153,0.35)];
+  }
+}
+
+/* ==========================================================================
+   REVELADO POR SCROLL (lo controla el componente Reveal)
+   ========================================================================== */
+.reveal {
+  opacity: 0;
+  transform: translate3d(0, 24px, 0);
+  transition:
+    opacity 0.8s cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: var(--d, 0ms);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ==========================================================================
+   LOGOTIPO
+   ========================================================================== */
+.logo-glow {
+  filter: drop-shadow(0 0 4px rgba(6, 182, 212, 0.25));
+  transition: filter 0.6s ease;
+}
+.logo-wrap:hover .logo-glow {
+  filter: drop-shadow(0 0 10px rgba(6, 182, 212, 0.45));
+}
+
+/* ==========================================================================
+   ACCESIBILIDAD
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 163, 184, 0.3) transparent;
+}

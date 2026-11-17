@@ -1,0 +1,25 @@
+# Secretos: nunca subir credenciales
+.env
+.env.*
+!.env.example
+*.json.key
+secrets/
+
+# Dependencias y compilados
+node_modules/
+dist/
+coverage/
+
+# Herramientas y artefactos locales
+.playwright-mcp/
+*.log
+.DS_Store
+Thumbs.db
+
+# Llaves y credenciales de servicio: nunca versionar
+secrets/
+*-sa*.json
+innovaciones-cr-mp2-*.json
+credentials.json
+client_secret*.json
+token.json

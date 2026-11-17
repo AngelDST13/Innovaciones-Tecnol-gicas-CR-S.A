@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.env
+*.log
+coverage/
+
+secrets/
+*-sa*.json
+innovaciones-cr-mp2-*.json
+credentials.json
+client_secret*.json
+token.json
