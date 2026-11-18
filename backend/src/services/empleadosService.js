@@ -1,42 +1,37 @@
 /** Consultas de colaboradores. Las funciones de perfil propio reciben siempre el id autenticado. */
-import { query } from '../config/database.js';
+import { supabase } from '../config/database.js';
 
 export async function listarColaboradores() {
-  const { rows } = await query(
-    `SELECT c.id, c.nombre, c.email, c.departamento, c.puesto,
-            c.fecha_ingreso, c.rol::text AS rol, c.estado::text AS estado,
-            j.nombre AS jefe
-       FROM colaboradores c
-       LEFT JOIN colaboradores j ON j.id = c.jefe_id
-      ORDER BY c.departamento, c.nombre`,
-  );
-  return rows;
+  const { data, error } = await supabase
+    .from('colaboradores')
+    .select('id, nombre, email, departamento, puesto, fecha_ingreso, rol, estado, jefe_id')
+    .order('departamento', { ascending: true })
+    .order('nombre', { ascending: true });
+  if (error) throw error;
+
+  const nombres = new Map(data.map((c) => [c.id, c.nombre]));
+  return data.map(({ jefe_id: jefeId, ...c }) => ({ ...c, jefe: jefeId ? (nombres.get(jefeId) ?? null) : null }));
 }
 
 export async function obtenerPerfilPropio(colaboradorId) {
   const [colaborador, saldos] = await Promise.all([
-    query(
-      `SELECT id, nombre, departamento, puesto, fecha_ingreso, rol::text AS rol
-         FROM colaboradores
-        WHERE id = $1`,
-      [colaboradorId],
-    ),
-    query(
-      `SELECT periodo, dias_asignados, dias_tomados, dias_disponibles
-         FROM saldos_vacaciones
-        WHERE colaborador_id = $1
-        ORDER BY periodo DESC`,
-      [colaboradorId],
-    ),
+    supabase.from('colaboradores').select('id, nombre, departamento, puesto, fecha_ingreso, rol').eq('id', colaboradorId).maybeSingle(),
+    supabase
+      .from('saldos_vacaciones')
+      .select('periodo, dias_asignados, dias_tomados, dias_disponibles')
+      .eq('colaborador_id', colaboradorId)
+      .order('periodo', { ascending: false }),
   ]);
+  if (colaborador.error) throw colaborador.error;
+  if (saldos.error) throw saldos.error;
 
   return {
-    ...colaborador.rows[0],
-    saldos_vacaciones: saldos.rows.map((fila) => ({
-      ...fila,
-      dias_asignados: Number(fila.dias_asignados),
-      dias_tomados: Number(fila.dias_tomados),
-      dias_disponibles: Number(fila.dias_disponibles),
+    ...colaborador.data,
+    saldos_vacaciones: saldos.data.map((s) => ({
+      ...s,
+      dias_asignados: Number(s.dias_asignados),
+      dias_tomados: Number(s.dias_tomados),
+      dias_disponibles: Number(s.dias_disponibles),
     })),
   };
 }

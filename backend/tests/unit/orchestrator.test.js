@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it } from '@jest/globals';
-import { deepseekCreate, query, respuestaModelo, resetearMocks } from '../helpers/mocks.js';
+import { db, deepseekCreate, respuestaModelo, resetearMocks } from '../helpers/mocks.js';
 
 const { procesarConsulta, clasificarIntencion, OrquestadorNoDisponible } = await import(
   '../../src/agents/orchestrator.js'
@@ -54,9 +54,10 @@ describe('orquestador', () => {
 
     expect(resultado).toMatchObject({ intencion: 'dato_personal', agente: 'datos', resuelta: true, respuesta: 'Te quedan 11 días.' });
     // Todas las consultas SQL del agente reciben el id autenticado como primer parámetro
-    const parametros = query.mock.calls.map(([, valores]) => valores[0]);
-    expect(parametros.length).toBeGreaterThan(0);
-    expect(parametros.every((id) => id === usuario.id)).toBe(true);
+    const tablasDelAgente = ['saldos_vacaciones', 'solicitudes', 'incapacidades'];
+    const filtrosPorId = db.igualdades.filter(([tabla, col]) => tablasDelAgente.includes(tabla) && col === 'colaborador_id');
+    expect(filtrosPorId.length).toBeGreaterThan(0);
+    expect(filtrosPorId.every(([, , valor]) => valor === usuario.id)).toBe(true);
   });
 
   it('enruta política al agente de políticas, que aún no resuelve (sin citas inventadas)', async () => {

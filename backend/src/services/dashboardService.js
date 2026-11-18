@@ -1,49 +1,61 @@
-/** Indicadores del dashboard ejecutivo de RRHH. */
-import { query } from '../config/database.js';
+/** Indicadores del dashboard ejecutivo de RRHH (lectura con supabase-js; agregaciones en JavaScript). */
+import { supabase } from '../config/database.js';
+import { desplazarFecha, diaCR, fechaCR, inicioDiaCR, inicioMes } from '../utils/fechas.js';
 
-const SQL_KPIS = `
-  SELECT
-    (SELECT COUNT(*) FROM solicitudes WHERE estado = 'pendiente')                  AS solicitudes_pendientes,
-    (SELECT COUNT(*) FROM colaboradores WHERE estado = 'activo')                   AS colaboradores_activos,
-    (SELECT COUNT(*) FROM incapacidades
-        WHERE fecha_inicio >= date_trunc('month', CURRENT_DATE))                   AS incapacidades_mes,
-    (SELECT COUNT(*) FROM consultas_chat WHERE fecha >= CURRENT_DATE)              AS consultas_hoy,
-    (SELECT ROUND(100.0 * COUNT(*) FILTER (WHERE resuelta) / NULLIF(COUNT(*), 0), 1)
-       FROM consultas_chat WHERE fecha >= now() - INTERVAL '30 days')              AS tasa_resolucion_30d`;
+const DIAS_TENDENCIA = 30;
 
-const SQL_TENDENCIA_30D = `
-  SELECT CAST(fecha AT TIME ZONE 'America/Costa_Rica' AS date) AS dia, COUNT(*) AS total
-    FROM consultas_chat
-   WHERE fecha >= now() - INTERVAL '30 days'
-   GROUP BY dia
-   ORDER BY dia`;
+async function contar(tabla, filtros = (q) => q) {
+  const { count, error } = await filtros(supabase.from(tabla).select('*', { count: 'exact', head: true }));
+  if (error) throw error;
+  return count ?? 0;
+}
 
-const SQL_PENDIENTES = `
-  SELECT s.id, c.nombre AS colaborador, s.tipo::text AS tipo, s.fecha_inicio, s.fecha_fin
-    FROM solicitudes s
-    JOIN colaboradores c ON c.id = s.colaborador_id
-   WHERE s.estado = 'pendiente'
-   ORDER BY s.creada_en
-   LIMIT 20`;
+export async function obtenerResumen(hoy = fechaCR()) {
+  const hace30 = desplazarFecha(hoy, -30);
+  const [pendientes, activos, incapacidadesMes, consultasHoy, consultas30, resueltas30, consultas30Filas, solicitudesPendientes, colaboradores] =
+    await Promise.all([
+      contar('solicitudes', (q) => q.eq('estado', 'pendiente')),
+      contar('colaboradores', (q) => q.eq('estado', 'activo')),
+      contar('incapacidades', (q) => q.gte('fecha_inicio', inicioMes(hoy))),
+      contar('consultas_chat', (q) => q.gte('fecha', inicioDiaCR(hoy))),
+      contar('consultas_chat', (q) => q.gte('fecha', inicioDiaCR(hace30))),
+      contar('consultas_chat', (q) => q.gte('fecha', inicioDiaCR(hace30)).eq('resuelta', true)),
+      supabase.from('consultas_chat').select('fecha').gte('fecha', inicioDiaCR(desplazarFecha(hoy, -(DIAS_TENDENCIA - 1)))),
+      supabase.from('solicitudes').select('id, colaborador_id, tipo, fecha_inicio, fecha_fin, creada_en').eq('estado', 'pendiente').order('creada_en', { ascending: true }).limit(20),
+      supabase.from('colaboradores').select('id, nombre'),
+    ]);
 
-export async function obtenerResumen() {
-  const [kpis, tendencia, pendientes] = await Promise.all([
-    query(SQL_KPIS),
-    query(SQL_TENDENCIA_30D),
-    query(SQL_PENDIENTES),
-  ]);
+  if (consultas30Filas.error) throw consultas30Filas.error;
+  if (solicitudesPendientes.error) throw solicitudesPendientes.error;
+  if (colaboradores.error) throw colaboradores.error;
 
-  const fila = kpis.rows[0];
+  // Tendencia de 30 días, agrupada por día de Costa Rica
+  const porDia = new Map();
+  for (const fila of consultas30Filas.data) {
+    const dia = diaCR(fila.fecha);
+    porDia.set(dia, (porDia.get(dia) ?? 0) + 1);
+  }
+  const tendencia = [...porDia.entries()]
+    .sort(([a], [b]) => (a < b ? -1 : 1))
+    .map(([dia, total]) => ({ dia, total }));
+
+  const nombres = new Map(colaboradores.data.map((c) => [c.id, c.nombre]));
+
   return {
     kpis: {
-      solicitudes_pendientes: fila.solicitudes_pendientes,
-      colaboradores_activos: fila.colaboradores_activos,
-      incapacidades_mes: fila.incapacidades_mes,
-      consultas_hoy: fila.consultas_hoy,
-      // ROUND devuelve NUMERIC (texto en pg); null si no hubo consultas en 30 días
-      tasa_resolucion_30d: fila.tasa_resolucion_30d === null ? null : Number(fila.tasa_resolucion_30d),
+      solicitudes_pendientes: pendientes,
+      colaboradores_activos: activos,
+      incapacidades_mes: incapacidadesMes,
+      consultas_hoy: consultasHoy,
+      tasa_resolucion_30d: consultas30 === 0 ? null : Number(((resueltas30 / consultas30) * 100).toFixed(1)),
     },
-    tendencia_chat_30d: tendencia.rows,
-    solicitudes_pendientes: pendientes.rows,
+    tendencia_chat_30d: tendencia,
+    solicitudes_pendientes: solicitudesPendientes.data.map((s) => ({
+      id: s.id,
+      colaborador: nombres.get(s.colaborador_id) ?? 'Colaborador',
+      tipo: s.tipo,
+      fecha_inicio: s.fecha_inicio,
+      fecha_fin: s.fecha_fin,
+    })),
   };
 }

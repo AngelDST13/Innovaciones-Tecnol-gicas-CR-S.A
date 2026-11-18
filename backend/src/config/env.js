@@ -26,11 +26,11 @@ export const env = Object.freeze({
   nodeEnv: process.env.NODE_ENV ?? 'development',
 
   databaseUrl: requerir('DATABASE_URL'),
+  supabaseUrl: requerir('SUPABASE_URL'),
+  supabaseServiceKey: requerir('SUPABASE_SERVICE_ROLE_KEY'),
   // Google Drive: carpeta de políticas (opcional; solo la usa la ingesta del RAG)
   driveFolderId: process.env.DRIVE_FOLDER_ID?.trim() || null,
 
-  // Rol de solo lectura para el agente de datos (ver scripts/crear-rol-lectura.js)
-  databaseUrlLectura: process.env.DATABASE_URL_LECTURA?.trim() || null,
   dbSslRejectUnauthorized: booleano('DB_SSL_REJECT_UNAUTHORIZED', false),
 
   deepseekApiKey: requerir('DEEPSEEK_API_KEY'),

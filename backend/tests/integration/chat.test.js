@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from '@jest/globals';
 import request from 'supertest';
-import { cargarApp, deepseekCreate, query, respuestaModelo, resetearMocks } from '../helpers/mocks.js';
+import { cargarApp, db, deepseekCreate, respuestaModelo, resetearMocks } from '../helpers/mocks.js';
 
 const app = await cargarApp();
 const COLABORADOR = '2';
@@ -38,8 +38,8 @@ describe('API de chat', () => {
     expect(res.body.respuesta).toMatch(/recursoshumanos@innovacionescr\.com/);
     expect(deepseekCreate).not.toHaveBeenCalled();
 
-    const registro = query.mock.calls.find(([sql]) => sql.includes('INSERT INTO consultas_chat'));
-    expect(registro[1]).toEqual(expect.arrayContaining([2, 'restringida', 'ninguno']));
+    const registro = db.tablas.consultas_chat.at(-1);
+    expect(registro).toMatchObject({ colaborador_id: 2, intencion: 'restringida', agente: 'ninguno', resuelta: true });
   });
 
   it('bloquea la pregunta trampa 22 (datos de un compañero) sin llamar al modelo', async () => {
@@ -99,9 +99,7 @@ describe('API de chat', () => {
 
     expect(res.status).toBe(200);
     expect(Array.isArray(res.body)).toBe(true);
-    const consulta = query.mock.calls.find(([sql]) =>
-      sql.replace(/\s+/g, ' ').includes('FROM consultas_chat WHERE colaborador_id'),
-    );
-    expect(consulta[1][0]).toBe(2);
+    // El historial se filtra por el id autenticado (colaborador 2)
+    expect(db.igualdades).toContainEqual(['consultas_chat', 'colaborador_id', 2]);
   });
 });

@@ -1,51 +1,48 @@
 /**
  * Agente de Datos del colaborador.
  *
- * Seguridad: las consultas SQL son fijas y parametrizadas, y todas filtran por el id del
- * usuario autenticado (nunca por un id que llegue en el mensaje). El modelo no genera SQL.
- * Solo recibe los datos de ese usuario y debe responder usando únicamente esos datos.
+ * Seguridad: solo lee (select) y cada consulta filtra por el id del usuario autenticado; nunca por un id
+ * que llegue en el mensaje. El modelo no genera consultas: recibe los datos de ese usuario y debe
+ * responder solo con ellos.
  */
-import { queryLectura as query } from '../config/database.js';
+import { supabase } from '../config/database.js';
 import { clienteDeepSeek, modeloDeepSeek } from '../config/deepseek.js';
 
 export class DatosNoDisponibles extends Error {}
 
-async function obtenerDatosDelColaborador(colaboradorId) {
+async function leerDatos(colaboradorId) {
   const [saldos, solicitudes, incapacidades] = await Promise.all([
-    query(
-      `SELECT periodo, dias_asignados, dias_tomados, dias_disponibles
-         FROM saldos_vacaciones
-        WHERE colaborador_id = $1
-        ORDER BY periodo DESC`,
-      [colaboradorId],
-    ),
-    query(
-      `SELECT tipo::text AS tipo, fecha_inicio, fecha_fin, estado::text AS estado
-         FROM solicitudes
-        WHERE colaborador_id = $1
-        ORDER BY creada_en DESC
-        LIMIT 10`,
-      [colaboradorId],
-    ),
-    query(
-      `SELECT tipo::text AS tipo, fecha_inicio, dias, entidad
-         FROM incapacidades
-        WHERE colaborador_id = $1
-        ORDER BY fecha_inicio DESC
-        LIMIT 10`,
-      [colaboradorId],
-    ),
+    supabase
+      .from('saldos_vacaciones')
+      .select('periodo, dias_asignados, dias_tomados, dias_disponibles')
+      .eq('colaborador_id', colaboradorId)
+      .order('periodo', { ascending: false }),
+    supabase
+      .from('solicitudes')
+      .select('tipo, fecha_inicio, fecha_fin, estado')
+      .eq('colaborador_id', colaboradorId)
+      .order('creada_en', { ascending: false })
+      .limit(10),
+    supabase
+      .from('incapacidades')
+      .select('tipo, fecha_inicio, dias, entidad')
+      .eq('colaborador_id', colaboradorId)
+      .order('fecha_inicio', { ascending: false })
+      .limit(10),
   ]);
+  for (const resultado of [saldos, solicitudes, incapacidades]) {
+    if (resultado.error) throw resultado.error;
+  }
 
   return {
-    saldos_vacaciones: saldos.rows.map((fila) => ({
-      periodo: fila.periodo,
-      dias_asignados: Number(fila.dias_asignados),
-      dias_tomados: Number(fila.dias_tomados),
-      dias_disponibles: Number(fila.dias_disponibles),
+    saldos_vacaciones: saldos.data.map((s) => ({
+      periodo: s.periodo,
+      dias_asignados: Number(s.dias_asignados),
+      dias_tomados: Number(s.dias_tomados),
+      dias_disponibles: Number(s.dias_disponibles),
     })),
-    solicitudes: solicitudes.rows,
-    incapacidades: incapacidades.rows,
+    solicitudes: solicitudes.data,
+    incapacidades: incapacidades.data,
   };
 }
 
@@ -55,7 +52,7 @@ Si la respuesta no está en esos datos, dilo explícitamente; no inventes cifras
 Responde en español, de forma breve y clara.`;
 
 export async function consultarDatosPersonales(colaboradorId, pregunta) {
-  const datos = await obtenerDatosDelColaborador(colaboradorId);
+  const datos = await leerDatos(colaboradorId);
 
   let respuesta;
   try {

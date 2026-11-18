@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it } from '@jest/globals';
-import { deepseekCreate, query, respuestaModelo, resetearMocks } from '../helpers/mocks.js';
+import { db, deepseekCreate, respuestaModelo, resetearMocks } from '../helpers/mocks.js';
 
 const { responderPolitica, MENSAJE_NO_ENCONTRADO, UMBRAL_SIMILITUD } = await import('../../src/agents/politicasAgent.js');
 
@@ -21,8 +21,7 @@ describe('agente de políticas (RAG)', () => {
   beforeEach(() => resetearMocks());
 
   it('sin fragmentos por encima del umbral: dice que no encontró la política y no llama al modelo', async () => {
-    query.mockImplementation(async (sql) =>
-      sql.includes('FROM fragmentos_politica f') ? { rows: [fragmento(UMBRAL_SIMILITUD - 0.02)] } : { rows: [] });
+    db.rpcs.buscar_fragmentos_politica = () => [fragmento(UMBRAL_SIMILITUD - 0.02)];
 
     const r = await responderPolitica('¿La empresa da bono por mascotas?');
     expect(r).toEqual({ respuesta: MENSAJE_NO_ENCONTRADO, documentos: [], resuelta: false });
@@ -30,8 +29,7 @@ describe('agente de políticas (RAG)', () => {
   });
 
   it('con fragmentos relevantes: responde con el modelo y cita documento, sección y punto', async () => {
-    query.mockImplementation(async (sql) =>
-      sql.includes('FROM fragmentos_politica f') ? { rows: [fragmento(0.92)] } : { rows: [] });
+    db.rpcs.buscar_fragmentos_politica = () => [fragmento(0.92)];
     deepseekCreate.mockResolvedValueOnce(respuestaModelo('Te corresponden 15 días hábiles [POL-01, punto 1.1].'));
 
     const r = await responderPolitica('¿Cuántos días de vacaciones me corresponden?');
@@ -43,10 +41,7 @@ describe('agente de políticas (RAG)', () => {
   });
 
   it('el contexto enviado al modelo marca los datos pendientes de validación', async () => {
-    query.mockImplementation(async (sql) =>
-      sql.includes('FROM fragmentos_politica f')
-        ? { rows: [fragmento(0.9, { por_validar: true, contenido: 'Monto [Por validar: 50 %].' })] }
-        : { rows: [] });
+    db.rpcs.buscar_fragmentos_politica = () => [fragmento(0.9, { por_validar: true, contenido: 'Monto [Por validar: 50 %].' })];
     deepseekCreate.mockResolvedValueOnce(respuestaModelo('Pendiente de validación.'));
 
     await responderPolitica('¿Quién paga los primeros días de incapacidad?');

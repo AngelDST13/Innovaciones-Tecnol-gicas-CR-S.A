@@ -1,14 +1,14 @@
 /**
- * Ingesta incremental de las políticas desde Drive a la base vectorial.
+ * Ingesta incremental de las políticas desde Drive a la base vectorial (vía supabase-js).
  *
  * - Nuevo: se extrae, fragmenta, vectoriza e inserta.
  * - Editado (modifiedTime distinto): se reemplazan sus fragmentos.
  * - Sin cambios: no se toca.
  * - Borrado (ya no está en la carpeta): se marca eliminado y se quitan sus fragmentos.
- * La fecha de modificación se guarda al final, así una ingesta interrumpida se reintenta completa en la siguiente.
+ * La fecha de modificación se guarda al final: una ingesta interrumpida se reintenta completa.
  */
 import { createHash } from 'node:crypto';
-import { query } from '../config/database.js';
+import { supabase } from '../config/database.js';
 import { env } from '../config/env.js';
 import { clienteDriveSoloLectura, extraerTexto, listarCarpeta, metadatosDesdeNombre } from '../drive/conector.js';
 import { fragmentosCalendario, fragmentosPolitica } from './fragmentador.js';
@@ -28,25 +28,32 @@ function textoParaEmbedding(f) {
   return `${ubicacion}: ${f.contenido}`;
 }
 
+async function verificar(resultado) {
+  if (resultado.error) throw resultado.error;
+  return resultado.data;
+}
+
 async function reemplazarFragmentos(documentoId, fragmentos) {
-  await query('DELETE FROM fragmentos_politica WHERE documento_id = $1', [documentoId]);
+  await verificar(await supabase.from('fragmentos_politica').delete().eq('documento_id', documentoId));
   for (let i = 0; i < fragmentos.length; i += LOTE_EMBEDDINGS) {
     const lote = fragmentos.slice(i, i + LOTE_EMBEDDINGS);
     const vectores = await vectorizarFragmentos(lote.map(textoParaEmbedding));
-    for (let j = 0; j < lote.length; j++) {
-      const f = lote[j];
-      await query(
-        `INSERT INTO fragmentos_politica
-           (documento_id, codigo, version, tipo_fragmento, seccion, seccion_titulo, punto, orden,
-            metadatos_documento, contenido, por_validar, hash_contenido, embedding)
-         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13::vector)`,
-        [
-          documentoId, f.codigo, f.version, f.tipo_fragmento, f.seccion, f.seccion_titulo, f.punto, f.orden,
-          f.metadatos_documento, f.contenido, f.por_validar, sha256(textoParaEmbedding(f)),
-          aTextoVector(vectores[j]),
-        ],
-      );
-    }
+    const filas = lote.map((f, j) => ({
+      documento_id: documentoId,
+      codigo: f.codigo,
+      version: f.version,
+      tipo_fragmento: f.tipo_fragmento,
+      seccion: f.seccion,
+      seccion_titulo: f.seccion_titulo,
+      punto: f.punto,
+      orden: f.orden,
+      metadatos_documento: f.metadatos_documento,
+      contenido: f.contenido,
+      por_validar: f.por_validar,
+      hash_contenido: sha256(textoParaEmbedding(f)),
+      embedding: aTextoVector(vectores[j]),
+    }));
+    await verificar(await supabase.from('fragmentos_politica').insert(filas));
   }
 }
 
@@ -59,8 +66,8 @@ export async function sincronizarPoliticas({ registrar = console } = {}) {
   const archivos = (await listarCarpeta(env.driveFolderId, drive))
     .filter((a) => metadatosDesdeNombre(a.name).codigo !== null);
 
-  const { rows: existentes } = await query(
-    'SELECT id, drive_file_id, fecha_modificacion, eliminado FROM documentos_politica',
+  const existentes = await verificar(
+    await supabase.from('documentos_politica').select('id, drive_file_id, fecha_modificacion, eliminado'),
   );
   const porDriveId = new Map(existentes.map((d) => [d.drive_file_id, d]));
   const resumen = { nuevos: 0, actualizados: 0, sinCambios: 0, eliminados: 0, fragmentos: 0 };
@@ -75,22 +82,35 @@ export async function sincronizarPoliticas({ registrar = console } = {}) {
       continue;
     }
 
-    const { rows } = await query(
-      `INSERT INTO documentos_politica (drive_file_id, titulo, version, enlace, fecha_modificacion, eliminado)
-            VALUES ($1, $2, $3, $4, $5, FALSE)
-       ON CONFLICT (drive_file_id) DO UPDATE
-              SET titulo = EXCLUDED.titulo, version = EXCLUDED.version, enlace = EXCLUDED.enlace, eliminado = FALSE
-       RETURNING id`,
-      [archivo.id, archivo.name.replace(/\.pdf$/i, ''), version ?? '—', `https://drive.google.com/file/d/${archivo.id}/view`, modificado],
+    const documento = await verificar(
+      await supabase
+        .from('documentos_politica')
+        .upsert(
+          {
+            drive_file_id: archivo.id,
+            titulo: archivo.name.replace(/\.pdf$/i, ''),
+            version: version ?? '—',
+            enlace: `https://drive.google.com/file/d/${archivo.id}/view`,
+            fecha_modificacion: modificado,
+            eliminado: false,
+          },
+          { onConflict: 'drive_file_id' },
+        )
+        .select('id')
+        .single(),
     );
-    const documentoId = rows[0].id;
 
     const { texto } = await extraerTexto(archivo, drive);
     const base = { codigo, version, drive_file_id: archivo.id };
     const fragmentos = codigo === 'POL-CAL' ? fragmentosCalendario(texto, base) : fragmentosPolitica(texto, base);
 
-    await reemplazarFragmentos(documentoId, fragmentos);
-    await query('UPDATE documentos_politica SET fecha_modificacion = $2, indexado_en = now() WHERE id = $1', [documentoId, modificado]);
+    await reemplazarFragmentos(documento.id, fragmentos);
+    await verificar(
+      await supabase
+        .from('documentos_politica')
+        .update({ fecha_modificacion: modificado, indexado_en: new Date().toISOString() })
+        .eq('id', documento.id),
+    );
 
     if (previo) resumen.actualizados += 1; else resumen.nuevos += 1;
     resumen.fragmentos += fragmentos.length;
@@ -101,12 +121,12 @@ export async function sincronizarPoliticas({ registrar = console } = {}) {
   const idsEnDrive = new Set(archivos.map((a) => a.id));
   for (const doc of existentes) {
     if (!doc.eliminado && !idsEnDrive.has(doc.drive_file_id)) {
-      await query('DELETE FROM fragmentos_politica WHERE documento_id = $1', [doc.id]);
-      await query('UPDATE documentos_politica SET eliminado = TRUE WHERE id = $1', [doc.id]);
+      await verificar(await supabase.from('fragmentos_politica').delete().eq('documento_id', doc.id));
+      await verificar(await supabase.from('documentos_politica').update({ eliminado: true }).eq('id', doc.id));
       resumen.eliminados += 1;
     }
   }
 
-  await query('UPDATE sync_drive_estado SET ultima_sync = now() WHERE id = 1');
+  await verificar(await supabase.from('sync_drive_estado').update({ ultima_sync: new Date().toISOString() }).eq('id', 1));
   return resumen;
 }

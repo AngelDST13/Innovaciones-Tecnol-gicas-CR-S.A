@@ -1,22 +1,28 @@
 /** Acceso a datos de identidad. Solo consultas; sin reglas HTTP. */
-import { query } from '../config/database.js';
+import { supabase } from '../config/database.js';
+
+const CAMPOS = 'id, nombre, rol';
 
 export async function buscarColaboradorActivoPorId(id) {
-  const { rows } = await query(
-    `SELECT id, nombre, rol::text AS rol
-       FROM colaboradores
-      WHERE id = $1 AND estado = 'activo'`,
-    [id],
-  );
-  return rows[0] ?? null;
+  const { data, error } = await supabase
+    .from('colaboradores')
+    .select(CAMPOS)
+    .eq('id', id)
+    .eq('estado', 'activo')
+    .maybeSingle();
+  if (error) throw error;
+  return data;
 }
 
 export async function buscarColaboradorActivoPorEmail(email) {
-  const { rows } = await query(
-    `SELECT id, nombre, rol::text AS rol
-       FROM colaboradores
-      WHERE lower(email) = lower($1) AND estado = 'activo'`,
-    [email],
-  );
-  return rows[0] ?? null;
+  // ilike sin comodines: se escapan % y _ para que el correo se compare literal
+  const literal = email.replace(/[%_\\]/g, (c) => `\\${c}`);
+  const { data, error } = await supabase
+    .from('colaboradores')
+    .select(CAMPOS)
+    .ilike('email', literal)
+    .eq('estado', 'activo')
+    .maybeSingle();
+  if (error) throw error;
+  return data;
 }

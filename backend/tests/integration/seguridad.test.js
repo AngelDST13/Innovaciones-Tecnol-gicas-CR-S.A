@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from '@jest/globals';
 import request from 'supertest';
-import { cargarApp, query, resolverSql, resetearMocks, verificarConexion } from '../helpers/mocks.js';
+import { cargarApp, db, resetearMocks } from '../helpers/mocks.js';
 
 const app = await cargarApp();
 
@@ -36,7 +36,7 @@ describe('middlewares de seguridad y operación', () => {
   });
 
   it('health: responde 503 cuando la base de datos no responde', async () => {
-    verificarConexion.mockResolvedValueOnce(false);
+    db.errorSiguiente = { message: 'base no disponible' };
     const res = await request(app).get('/health');
     expect(res.status).toBe(503);
     expect(res.body.status).toBe('degradado');
@@ -50,7 +50,8 @@ describe('middlewares de seguridad y operación', () => {
 
   it('error no controlado: responde 500 genérico sin filtrar detalles internos', async () => {
     // La primera consulta (autenticación) funciona; la segunda (KPIs) falla.
-    query.mockImplementationOnce(resolverSql).mockRejectedValueOnce(new Error('detalle interno secreto'));
+    // La primera operación (autenticación) funciona; la segunda (KPIs del dashboard) falla
+    db.erroresEnCola = [null, { message: 'detalle interno secreto' }];
 
     const res = await request(app).get('/api/v1/dashboard/resumen').set('X-User-Id', '1');
 
@@ -61,8 +62,7 @@ describe('middlewares de seguridad y operación', () => {
 
   it('login con la base de datos caída responde 503 amigable, no 500', async () => {
     const errorRed = Object.assign(new Error('connect ECONNREFUSED 127.0.0.1:5432'), { code: 'ECONNREFUSED' });
-    query.mockReset();
-    query.mockRejectedValueOnce(errorRed);
+    db.errorSiguiente = errorRed;
 
     const res = await request(app)
       .post('/api/v1/auth/login')
