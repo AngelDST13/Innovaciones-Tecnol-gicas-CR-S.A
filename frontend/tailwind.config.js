@@ -29,8 +29,8 @@ export default {
       },
       boxShadow: {
         glass: '0 25px 50px -12px rgba(0, 0, 0, 0.6)',
-        'glow-cyan': '0 0 28px -6px rgba(8, 145, 178, 0.45)',
-        'glow-indigo': '0 0 28px -6px rgba(79, 70, 229, 0.45)',
+        'glow-cyan': '0 0 28px -6px rgba(45, 212, 191, 0.4)',
+        'glow-indigo': '0 0 28px -6px rgba(167, 139, 250, 0.4)',
       },
       keyframes: {
         fadeIn: { from: { opacity: '0' }, to: { opacity: '1' } },

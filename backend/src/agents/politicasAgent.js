@@ -13,10 +13,12 @@ import { validarRespuesta } from './validadorAgent.js';
 
 /**
  * Similitud mínima para considerar que un fragmento responde la pregunta.
- * Calibrado con multilingual-e5-small: las preguntas con respuesta en los documentos puntúan 0.85–0.92;
- * las que no tienen respuesta ("mascotas", "película") llegan hasta 0.82. Confirmar con el banco de 45 preguntas.
+ * Calibrado con scripts/calibrar-umbral.js (32 preguntas, multilingual-e5-small):
+ *   - con respuesta en documentos: mínimo 0.871
+ *   - sin respuesta en documentos: máximo 0.826
+ * 0.85 queda a la mitad de la brecha, con margen en ambos lados. Exactitud de la calibración: 100 %.
  */
-export const UMBRAL_SIMILITUD = 0.84;
+export const UMBRAL_SIMILITUD = 0.85;
 
 export const MENSAJE_NO_ENCONTRADO =
   'No encontré esa política en los documentos oficiales. Puedo derivar tu consulta a una persona de ' +

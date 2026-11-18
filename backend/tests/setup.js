@@ -2,7 +2,6 @@
  * Variables de entorno de prueba. Se cargan antes de cada archivo de test.
  * Las pruebas nunca usan credenciales reales: la base de datos y DeepSeek se simulan.
  */
-process.env.DATABASE_URL = 'postgresql://test:test@localhost:5432/test';
 process.env.DEEPSEEK_API_KEY = 'clave-de-prueba';
 process.env.CORS_ORIGINS = 'http://localhost:5173';
 process.env.LATENCY_WARNING_MS = '3000';

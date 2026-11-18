@@ -145,15 +145,15 @@ export default function DashboardPage() {
                 <AreaChart data={tendencia} margin={{ top: 8, right: 8, left: -16, bottom: 0 }}>
                   <defs>
                     <linearGradient id="gradiente-tendencia" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#06b6d4" stopOpacity={0.45} />
-                      <stop offset="100%" stopColor="#6366f1" stopOpacity={0} />
+                      <stop offset="0%" stopColor="#2DD4BF" stopOpacity={0.45} />
+                      <stop offset="100%" stopColor="#A78BFA" stopOpacity={0} />
                     </linearGradient>
                   </defs>
                   <CartesianGrid stroke="currentColor" strokeOpacity={0.12} vertical={false} />
                   <XAxis dataKey="etiqueta" stroke="currentColor" fontSize={11} tickLine={false} axisLine={false} interval="preserveStartEnd" minTickGap={28} />
                   <YAxis stroke="currentColor" fontSize={11} tickLine={false} axisLine={false} allowDecimals={false} />
-                  <Tooltip cursor={{ stroke: '#06b6d4', strokeOpacity: 0.3 }} content={<TooltipTendencia />} />
-                  <Area type="monotone" dataKey="consultas" stroke="#06b6d4" strokeWidth={2.5} fill="url(#gradiente-tendencia)" dot={false} activeDot={{ r: 5, fill: '#10b981', strokeWidth: 0 }} />
+                  <Tooltip cursor={{ stroke: '#2DD4BF', strokeOpacity: 0.3 }} content={<TooltipTendencia />} />
+                  <Area type="monotone" dataKey="consultas" stroke="#2DD4BF" strokeWidth={2.5} fill="url(#gradiente-tendencia)" dot={false} activeDot={{ r: 5, fill: '#FBBF24', strokeWidth: 0 }} />
                 </AreaChart>
               </ResponsiveContainer>
             </div>
@@ -180,8 +180,8 @@ export default function DashboardPage() {
                   <CartesianGrid stroke="currentColor" strokeOpacity={0.12} vertical={false} />
                   <XAxis dataKey="etiqueta" stroke="currentColor" fontSize={12} tickLine={false} axisLine={false} />
                   <YAxis stroke="currentColor" fontSize={11} tickLine={false} axisLine={false} allowDecimals={false} />
-                  <Tooltip cursor={{ fill: '#06b6d4', fillOpacity: 0.08 }} content={<TooltipTendencia unidad="personas" />} />
-                  <Bar dataKey="personas" fill="#6366f1" radius={[8, 8, 0, 0]} />
+                  <Tooltip cursor={{ fill: '#2DD4BF', fillOpacity: 0.08 }} content={<TooltipTendencia unidad="personas" />} />
+                  <Bar dataKey="personas" fill="#A78BFA" radius={[8, 8, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </div>

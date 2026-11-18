@@ -30,7 +30,7 @@ seguido de la pregunta del colaborador.
 ## Reglas que aplica el código (fuera del prompt)
 
 1. Se recuperan los 5 fragmentos más parecidos de documentos vigentes (no eliminados).
-2. Solo se usan los fragmentos con similitud ≥ 0.84. Si ninguno llega, se responde la negativa
+2. Solo se usan los fragmentos con similitud ≥ 0.85. Si ninguno llega, se responde la negativa
    con escalamiento y no se llama al modelo.
 3. Las citas se construyen en el código (documento, sección, punto, enlace a Drive), no las escribe el modelo.
 

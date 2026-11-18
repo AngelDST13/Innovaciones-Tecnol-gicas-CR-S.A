@@ -173,7 +173,7 @@ En orden de prioridad: el RAG con Drive y pgvector; la sincronización diaria; e
 
 ## 12. Instalación
 
-Ver `README.md` en la raíz del repositorio. Resumen: crear el proyecto de Supabase, configurar `backend/.env`, aplicar `database/schema.sql` solo en una base vacía, aplicar las migraciones y el seed con `backend/scripts/aplicar-sql.js`, instalar dependencias y ejecutar `npm run start` en el backend y `npm run dev` en el frontend.
+Ver `README.md` en la raíz del repositorio. Resumen: crear el proyecto de Supabase, configurar `backend/.env`, aplicar `database/schema.sql` solo en una base vacía, ejecutar las migraciones y el seed en el SQL Editor de Supabase, en orden, instalar dependencias y ejecutar `npm run start` en el backend y `npm run dev` en el frontend.
 
 ## 13. Referencias
 

@@ -1,0 +1,1570 @@
+{
+  "fecha": "2026-11-18T14:59:56.464Z",
+  "aciertos": 37,
+  "total": 45,
+  "p90_ms": 3312,
+  "resultados": [
+    {
+      "n": 1,
+      "pregunta": "¿Cuántos días de vacaciones me corresponden al año?",
+      "intencion": "politica",
+      "agente": "politicas",
+      "bloqueada": false,
+      "escalada": false,
+      "respuesta": "Te corresponden 15 días hábiles de vacaciones remuneradas por año, siempre que tengas servicio continuo de 50 semanas con la empresa [POL-01, punto 1.1]. Este beneficio supera el mínimo legal de dos semanas por cada cincuenta semanas de servicio, y la empresa nunca otorga menos que la ley [POL-01, punto 1.2]. Si estás en tu periodo de ingreso proporcional, acumulas 1,25 días hábiles por mes trabajado hasta completar el primer año [POL-01, punto 1.3].",
+      "citas": [
+        {
+          "documento": "POL-01 Vacaciones y feriados v2.1",
+          "seccion": "Sección 6",
+          "enlace": "https://drive.google.com/file/d/1IMmOkpYcLfFw4FhDORz4ATjLTchwC95o/view"
+        },
+        {
+          "documento": "POL-01 Vacaciones y feriados v2.1",
+          "seccion": "Sección 1, punto 1.1",
+          "enlace": "https://drive.google.com/file/d/1IMmOkpYcLfFw4FhDORz4ATjLTchwC95o/view"
+        },
+        {
+          "documento": "POL-01 Vacaciones y feriados v2.1",
+          "seccion": "Sección 1, punto 1.3",
+          "enlace": "https://drive.google.com/file/d/1IMmOkpYcLfFw4FhDORz4ATjLTchwC95o/view"
+        },
+        {
+          "documento": "POL-01 Vacaciones y feriados v2.1",
+          "seccion": "Sección 1, punto 1.2",
+          "enlace": "https://drive.google.com/file/d/1IMmOkpYcLfFw4FhDORz4ATjLTchwC95o/view"
+        },
+        {
+          "documento": "POL-01 Vacaciones y feriados v2.1",
+          "seccion": "Sección 3, punto 3.1",
+          "enlace": "https://drive.google.com/file/d/1IMmOkpYcLfFw4FhDORz4ATjLTchwC95o/view"
+        }
+      ],
+      "latencia_ms": 5229,
+      "acierto": true,
+      "motivo": "contiene datos esperados"
+    },
+    {
+      "n": 2,
+      "pregunta": "¿Cuántos días de vacaciones me quedan disponibles?",
+      "intencion": "dato_personal",
+      "agente": "datos",
+      "bloqueada": false,
+      "escalada": false,
+      "respuesta": "Según tus datos, para el periodo 2026 tienes **11 días de vacaciones disponibles** (15 asignados, 4 tomados).",
+      "citas": [],
+      "latencia_ms": 2805,
+      "acierto": true,
+      "motivo": "contiene datos esperados"
+    },
+    {
+      "n": 3,
+      "pregunta": "¿Puedo acumular vacaciones para el próximo año?",
+      "intencion": "politica",
+      "agente": "politicas",
+      "bloqueada": false,
+      "escalada": false,
+      "respuesta": "Sí, puedes trasladar hasta 10 días hábiles al año siguiente, siempre con aprobación de RRHH y dentro del plazo de disfrute del periodo siguiente; lo que exceda esos 10 días debe disfrutarse en el periodo en curso [POL-01, punto 3.2]. Además, las vacaciones pueden fraccionarse en periodos de al menos 5 días hábiles consecutivos, salvo acuerdo escrito [POL-01, punto 3.1]. Ten en cuenta que no es posible compensar vacaciones en dinero, salvo al terminar la relación laboral [POL-01, punto 3.3]. Si necesitas revisar tu caso particular de acumulación, puedo derivarlo a RRHH.",
+      "citas": [
+        {
+          "documento": "POL-01 Vacaciones y feriados v2.1",
+          "seccion": "Sección 3, punto 3.1",
+          "enlace": "https://drive.google.com/file/d/1IMmOkpYcLfFw4FhDORz4ATjLTchwC95o/view"
+        },
+        {
+          "documento": "POL-01 Vacaciones y feriados v2.1",
+          "seccion": "Sección 3, punto 3.3",
+          "enlace": "https://drive.google.com/file/d/1IMmOkpYcLfFw4FhDORz4ATjLTchwC95o/view"
+        },
+        {
+          "documento": "POL-01 Vacaciones y feriados v2.1",
+          "seccion": "Sección 3, punto 3.2",
+          "enlace": "https://drive.google.com/file/d/1IMmOkpYcLfFw4FhDORz4ATjLTchwC95o/view"
+        },
+        {
+          "documento": "POL-01 Vacaciones y feriados v2.1",
+          "seccion": "Sección 1, punto 1.3",
+          "enlace": "https://drive.google.com/file/d/1IMmOkpYcLfFw4FhDORz4ATjLTchwC95o/view"
+        }
+      ],
+      "latencia_ms": 3021,
+      "acierto": true,
+      "motivo": "contiene datos esperados"
+    },
+    {
+      "n": 4,
+      "pregunta": "¿Con cuánta anticipación debo solicitar vacaciones?",
+      "intencion": "politica",
+      "agente": "politicas",
+      "bloqueada": false,
+      "escalada": false,
+      "respuesta": "Debes solicitar las vacaciones con al menos 15 días naturales de anticipación, según el punto 2.1 [POL-01, sección 6]. La fuente que lo detalla es la política de Vacaciones y feriados v2.1 [POL-01, sección 6]. Si necesitas confirmar excepciones o casos particulares, puedo derivar tu consulta a RRHH.",
+      "citas": [
+        {
+          "documento": "POL-01 Vacaciones y feriados v2.1",
+          "seccion": "Sección 6",
+          "enlace": "https://drive.google.com/file/d/1IMmOkpYcLfFw4FhDORz4ATjLTchwC95o/view"
+        },
+        {
+          "documento": "POL-01 Vacaciones y feriados v2.1",
+          "seccion": "Sección 1, punto 1.1",
+          "enlace": "https://drive.google.com/file/d/1IMmOkpYcLfFw4FhDORz4ATjLTchwC95o/view"
+        },
+        {
+          "documento": "POL-07 Ingreso y salida v1.2",
+          "seccion": "Sección 5",
+          "enlace": "https://drive.google.com/file/d/1w_eoVdWgKrItgUidC15xJbbWFfS1oB7lclUj_EsXhjs/view"
+        },
+        {
+          "documento": "POL-07 Ingreso y salida v1.2",
+          "seccion": "Sección 3, punto 3.1",
+          "enlace": "https://drive.google.com/file/d/1w_eoVdWgKrItgUidC15xJbbWFfS1oB7lclUj_EsXhjs/view"
+        },
+        {
+          "documento": "POL-01 Vacaciones y feriados v2.1",
+          "seccion": "Sección 3, punto 3.1",
+          "enlace": "https://drive.google.com/file/d/1IMmOkpYcLfFw4FhDORz4ATjLTchwC95o/view"
+        }
+      ],
+      "latencia_ms": 2535,
+      "acierto": true,
+      "motivo": "contiene datos esperados"
+    },
+    {
+      "n": 5,
+      "pregunta": "¿Cuántos días de permiso tengo por fallecimiento de un familiar?",
+      "intencion": "politica",
+      "agente": "politicas",
+      "bloqueada": false,
+      "escalada": false,
+      "respuesta": "Según POL-02, tienes 5 días hábiles por fallecimiento de familiar directo (cónyuge, hijo, padre o madre) y 3 días hábiles por hermano, abuelo o nieto, requiriendo acta de defunción [POL-02, sección 1]. La empresa otorga 5 días por familiar directo, aunque la referencia legal mínima debe confirmarse en el texto oficial [POL-02, sección 1]. También existe una licencia especial de tres meses para el padre por muerte de la madre durante el parto [POL-02, punto 2.3].",
+      "citas": [
+        {
+          "documento": "POL-02 Permisos y licencias v1.4",
+          "seccion": "Sección 4",
+          "enlace": "https://drive.google.com/file/d/1PC-JTbZhi_RrWVMKZINBfS1gaspHeYs36p6N77OKFTg/view"
+        },
+        {
+          "documento": "POL-02 Permisos y licencias v1.4",
+          "seccion": "Sección 1",
+          "enlace": "https://drive.google.com/file/d/1PC-JTbZhi_RrWVMKZINBfS1gaspHeYs36p6N77OKFTg/view"
+        },
+        {
+          "documento": "POL-02 Permisos y licencias v1.4",
+          "seccion": "Sección 2, punto 2.2",
+          "enlace": "https://drive.google.com/file/d/1PC-JTbZhi_RrWVMKZINBfS1gaspHeYs36p6N77OKFTg/view"
+        },
+        {
+          "documento": "POL-02 Permisos y licencias v1.4",
+          "seccion": "Sección 2, punto 2.3",
+          "enlace": "https://drive.google.com/file/d/1PC-JTbZhi_RrWVMKZINBfS1gaspHeYs36p6N77OKFTg/view"
+        }
+      ],
+      "latencia_ms": 2424,
+      "acierto": true,
+      "motivo": "contiene datos esperados"
+    },
+    {
+      "n": 6,
+      "pregunta": "¿Cuánto dura la licencia de maternidad y la de paternidad?",
+      "intencion": "politica",
+      "agente": "politicas",
+      "bloqueada": false,
+      "escalada": false,
+      "respuesta": "Según POL-02, la licencia de maternidad dura cuatro meses en total (un mes antes del parto y tres meses después), con subsidio de la CCSS y complemento empresarial hasta el 100 % del salario [POL-02, sección 2, punto 2.1]; este dato está pendiente de validación con el área legal. La licencia de paternidad es de dos días por semana durante las primeras cuatro semanas posteriores al nacimiento, con salario, más dos días hábiles adicionales de la empresa en la semana de nacimiento [POL-02, sección 2, punto 2.2]. El estado del expediente 25.049 está pendiente de validación [POL-02, sección 2, punto 2.2]. Además, existe una licencia especial de tres meses con salario para el padre en caso de muerte de la madre durante el parto [POL-02, sección 2, punto 2.3]. Para estas licencias, RRHH tramita directamente con la CCSS [POL-02, sección 3, punto 3.2].",
+      "citas": [
+        {
+          "documento": "POL-02 Permisos y licencias v1.4",
+          "seccion": "Sección 4",
+          "enlace": "https://drive.google.com/file/d/1PC-JTbZhi_RrWVMKZINBfS1gaspHeYs36p6N77OKFTg/view"
+        },
+        {
+          "documento": "POL-02 Permisos y licencias v1.4",
+          "seccion": "Sección 2, punto 2.3",
+          "enlace": "https://drive.google.com/file/d/1PC-JTbZhi_RrWVMKZINBfS1gaspHeYs36p6N77OKFTg/view"
+        },
+        {
+          "documento": "POL-02 Permisos y licencias v1.4",
+          "seccion": "Sección 2, punto 2.2",
+          "enlace": "https://drive.google.com/file/d/1PC-JTbZhi_RrWVMKZINBfS1gaspHeYs36p6N77OKFTg/view"
+        },
+        {
+          "documento": "POL-02 Permisos y licencias v1.4",
+          "seccion": "Sección 2, punto 2.1",
+          "enlace": "https://drive.google.com/file/d/1PC-JTbZhi_RrWVMKZINBfS1gaspHeYs36p6N77OKFTg/view"
+        },
+        {
+          "documento": "POL-02 Permisos y licencias v1.4",
+          "seccion": "Sección 3, punto 3.2",
+          "enlace": "https://drive.google.com/file/d/1PC-JTbZhi_RrWVMKZINBfS1gaspHeYs36p6N77OKFTg/view"
+        }
+      ],
+      "latencia_ms": 2817,
+      "acierto": true,
+      "motivo": "contiene datos esperados"
+    },
+    {
+      "n": 7,
+      "pregunta": "Me incapacitaron 5 días, ¿quién paga esos días y cuánto recibo?",
+      "intencion": "mixta",
+      "agente": "politicas_datos",
+      "bloqueada": false,
+      "escalada": false,
+      "respuesta": "Según tus datos, no puedo responder eso. El JSON solo registra una incapacidad por enfermedad del 14/09/2026 de **3 días** (CCSS), no de 5 días, y no incluye información sobre quién paga ni montos a recibir. Te sugiero consultar directamente con la CCSS o con el departamento de planillas.\n\nSegún [POL-03, sección 5], los tres primeros días los paga la empresa al 50 % y los días 4 y 5 los paga la CCSS. Además, la empresa complementa hasta el 100 % del salario, según el punto 3.1 [POL-03, sección 5]. Debes registrar la incapacidad en el portal dentro de las 24 horas siguientes al inicio y presentar el certificado original a RRHH en un plazo de 3 días hábiles [POL-03, punto 4.1]. Si tienes dudas sobre el monto, se resuelven con RRHH en el plazo de 5 días hábiles [POL-05, punto 4.2].",
+      "citas": [
+        {
+          "documento": "POL-03 Incapacidades v1.2",
+          "seccion": "Sección 5",
+          "enlace": "https://drive.google.com/file/d/1BCKBwHElBzZz4a9IkRC_x96HMfSC3U1aJ13OCZBOcIo/view"
+        },
+        {
+          "documento": "POL-03 Incapacidades v1.2",
+          "seccion": "Sección 4, punto 4.1",
+          "enlace": "https://drive.google.com/file/d/1BCKBwHElBzZz4a9IkRC_x96HMfSC3U1aJ13OCZBOcIo/view"
+        },
+        {
+          "documento": "POL-05 Remuneración y pagos v2.0",
+          "seccion": "Sección 4, punto 4.2",
+          "enlace": "https://drive.google.com/file/d/1so5QujLykAzQEUOCAlBFIQwHmcDA7x7HEbcE9Zt0kx0/view"
+        }
+      ],
+      "latencia_ms": 3312,
+      "acierto": true,
+      "motivo": "contiene datos esperados"
+    },
+    {
+      "n": 8,
+      "pregunta": "¿Cuándo pagan el aguinaldo y cómo se calcula?",
+      "intencion": "politica",
+      "agente": "politicas",
+      "bloqueada": false,
+      "escalada": false,
+      "respuesta": "El aguinaldo se paga el 15 de diciembre, dentro del plazo legal del 1 al 20 de diciembre [POL-05, punto 1.3], y así figura también en el calendario 2026 [POL-CAL, calendario]. Equivale a la doceava parte del salario devengado del 1 de diciembre del año anterior al 30 de noviembre del año en curso [POL-05, punto 2.1]. La lista de componentes salariales incluidos en el cálculo está pendiente de validación [POL-05, punto 2.1]. Si la relación laboral termina antes de diciembre, se paga completo en la liquidación [POL-05, punto 2.3]. Para confirmar los componentes del cálculo, puedo derivar el caso a RRHH.",
+      "citas": [
+        {
+          "documento": "POL-05 Remuneración y pagos v2.0",
+          "seccion": "Sección 5",
+          "enlace": "https://drive.google.com/file/d/1so5QujLykAzQEUOCAlBFIQwHmcDA7x7HEbcE9Zt0kx0/view"
+        },
+        {
+          "documento": "POL-05 Remuneración y pagos v2.0",
+          "seccion": "Sección 1, punto 1.3",
+          "enlace": "https://drive.google.com/file/d/1so5QujLykAzQEUOCAlBFIQwHmcDA7x7HEbcE9Zt0kx0/view"
+        },
+        {
+          "documento": "POL-CAL Calendario de feriados y pagos 2026",
+          "seccion": "Calendario",
+          "enlace": "https://drive.google.com/file/d/1OE-D3EULn2dmRcu_zMC_TX6ZJSyYg7CfngbTKPcxe3o/view"
+        },
+        {
+          "documento": "POL-05 Remuneración y pagos v2.0",
+          "seccion": "Sección 2, punto 2.3",
+          "enlace": "https://drive.google.com/file/d/1so5QujLykAzQEUOCAlBFIQwHmcDA7x7HEbcE9Zt0kx0/view"
+        },
+        {
+          "documento": "POL-05 Remuneración y pagos v2.0",
+          "seccion": "Sección 2, punto 2.1",
+          "enlace": "https://drive.google.com/file/d/1so5QujLykAzQEUOCAlBFIQwHmcDA7x7HEbcE9Zt0kx0/view"
+        }
+      ],
+      "latencia_ms": 3340,
+      "acierto": true,
+      "motivo": "contiene datos esperados"
+    },
+    {
+      "n": 9,
+      "pregunta": "¿Qué día cae mi próximo pago?",
+      "intencion": "dato_personal",
+      "agente": "datos",
+      "bloqueada": false,
+      "escalada": false,
+      "respuesta": "Tu próximo pago es el 30 de noviembre de 2026: Pago de planilla (quincena).",
+      "citas": [
+        {
+          "documento": "POL-05 Remuneración y pagos v2.0",
+          "seccion": "Sección 1, punto 1.1",
+          "enlace": null
+        }
+      ],
+      "latencia_ms": 1196,
+      "acierto": true,
+      "motivo": "contiene datos esperados"
+    },
+    {
+      "n": 10,
+      "pregunta": "¿Cuántos días puedo trabajar desde casa por semana?",
+      "intencion": "politica",
+      "agente": "politicas",
+      "bloqueada": false,
+      "escalada": false,
+      "respuesta": "Puedes trabajar desde casa hasta 2 días por semana, con aprobación de tu jefe directo [POL-04, punto 3.1]. Este mismo criterio se confirma en la sección de preguntas frecuentes de la política [POL-04, sección 5].",
+      "citas": [
+        {
+          "documento": "POL-04 Jornada y asistencia v1.3",
+          "seccion": "Sección 3, punto 3.1",
+          "enlace": "https://drive.google.com/file/d/1B_o6F0sM6zVVrxY9ARR50fHafQvR1MO8/view"
+        },
+        {
+          "documento": "POL-04 Jornada y asistencia v1.3",
+          "seccion": "Sección 5",
+          "enlace": "https://drive.google.com/file/d/1B_o6F0sM6zVVrxY9ARR50fHafQvR1MO8/view"
+        },
+        {
+          "documento": "POL-01 Vacaciones y feriados v2.1",
+          "seccion": "Sección 1, punto 1.1",
+          "enlace": "https://drive.google.com/file/d/1IMmOkpYcLfFw4FhDORz4ATjLTchwC95o/view"
+        },
+        {
+          "documento": "POL-01 Vacaciones y feriados v2.1",
+          "seccion": "Sección 1, punto 1.3",
+          "enlace": "https://drive.google.com/file/d/1IMmOkpYcLfFw4FhDORz4ATjLTchwC95o/view"
+        },
+        {
+          "documento": "POL-01 Vacaciones y feriados v2.1",
+          "seccion": "Sección 1, punto 1.2",
+          "enlace": "https://drive.google.com/file/d/1IMmOkpYcLfFw4FhDORz4ATjLTchwC95o/view"
+        }
+      ],
+      "latencia_ms": 2188,
+      "acierto": true,
+      "motivo": "contiene datos esperados"
+    },
+    {
+      "n": 11,
+      "pregunta": "¿Cómo se pagan las horas extra?",
+      "intencion": "politica",
+      "agente": "politicas",
+      "bloqueada": false,
+      "escalada": false,
+      "respuesta": "Las horas extra se pagan con un recargo sobre el salario ordinario, y el recargo mínimo es el que establece la ley [POL-04, punto 2.1]. El porcentaje exacto del recargo está pendiente de validación [POL-04, punto 2.1]. Además, deben estar aprobadas por el jefe directo antes de trabajarse [POL-04, punto 2.2] y se incluyen en el cálculo del aguinaldo según la política de remuneración [POL-04, punto 2.3].",
+      "citas": [
+        {
+          "documento": "POL-04 Jornada y asistencia v1.3",
+          "seccion": "Sección 2, punto 2.1",
+          "enlace": "https://drive.google.com/file/d/1B_o6F0sM6zVVrxY9ARR50fHafQvR1MO8/view"
+        },
+        {
+          "documento": "POL-04 Jornada y asistencia v1.3",
+          "seccion": "Sección 2, punto 2.3",
+          "enlace": "https://drive.google.com/file/d/1B_o6F0sM6zVVrxY9ARR50fHafQvR1MO8/view"
+        },
+        {
+          "documento": "POL-04 Jornada y asistencia v1.3",
+          "seccion": "Sección 2, punto 2.2",
+          "enlace": "https://drive.google.com/file/d/1B_o6F0sM6zVVrxY9ARR50fHafQvR1MO8/view"
+        },
+        {
+          "documento": "POL-04 Jornada y asistencia v1.3",
+          "seccion": "Sección 5",
+          "enlace": "https://drive.google.com/file/d/1B_o6F0sM6zVVrxY9ARR50fHafQvR1MO8/view"
+        }
+      ],
+      "latencia_ms": 2890,
+      "acierto": true,
+      "motivo": "contiene datos esperados"
+    },
+    {
+      "n": 12,
+      "pregunta": "¿Cuánto dura el periodo de prueba?",
+      "intencion": "politica",
+      "agente": "politicas",
+      "bloqueada": false,
+      "escalada": false,
+      "respuesta": "El periodo de prueba es de tres meses [POL-07, punto 1.1]. Al final de ese periodo, la evaluación de RRHH confirma la permanencia [POL-07, punto 1.2]. La duración máxima legal figura como \"[Por validar: duración máxima legal]\", por lo que ese dato está pendiente de validación [POL-07, punto 1.1].",
+      "citas": [
+        {
+          "documento": "POL-07 Ingreso y salida v1.2",
+          "seccion": "Sección 1, punto 1.1",
+          "enlace": "https://drive.google.com/file/d/1w_eoVdWgKrItgUidC15xJbbWFfS1oB7lclUj_EsXhjs/view"
+        },
+        {
+          "documento": "POL-07 Ingreso y salida v1.2",
+          "seccion": "Sección 1, punto 1.2",
+          "enlace": "https://drive.google.com/file/d/1w_eoVdWgKrItgUidC15xJbbWFfS1oB7lclUj_EsXhjs/view"
+        },
+        {
+          "documento": "POL-09 Conducta y convivencia v1.1",
+          "seccion": "Sección 3, punto 3.3",
+          "enlace": "https://drive.google.com/file/d/1s8TeCkwpwFbjXz0AxRdRwDDM6ky1KDOODGieJOGbUUc/view"
+        },
+        {
+          "documento": "POL-02 Permisos y licencias v1.4",
+          "seccion": "Sección 4",
+          "enlace": "https://drive.google.com/file/d/1PC-JTbZhi_RrWVMKZINBfS1gaspHeYs36p6N77OKFTg/view"
+        },
+        {
+          "documento": "POL-07 Ingreso y salida v1.2",
+          "seccion": "Sección 5",
+          "enlace": "https://drive.google.com/file/d/1w_eoVdWgKrItgUidC15xJbbWFfS1oB7lclUj_EsXhjs/view"
+        }
+      ],
+      "latencia_ms": 2553,
+      "acierto": true,
+      "motivo": "contiene datos esperados"
+    },
+    {
+      "n": 13,
+      "pregunta": "Si renuncio, ¿cuántos días de preaviso debo dar?",
+      "intencion": "politica",
+      "agente": "politicas",
+      "bloqueada": false,
+      "escalada": false,
+      "respuesta": "El preaviso depende de tu antigüedad: hasta 3 meses de servicio no se requiere preaviso; más de 3 meses y menos de 6, una semana; entre 6 meses y 1 año, 15 días; y más de 1 año, 1 mes [POL-07, punto 3.1]. Ten en cuenta que los tramos exactos de esta tabla están marcados como \"[Por validar: tramos exactos]\", por lo que ese dato está pendiente de validación [POL-07, punto 3.1]. Si no das el preaviso, la empresa puede descontar el equivalente en salario de tu liquidación [POL-07, punto 3.2]. Para confirmar los tramos definitivos, puedo derivar tu caso a RRHH.",
+      "citas": [
+        {
+          "documento": "POL-07 Ingreso y salida v1.2",
+          "seccion": "Sección 5",
+          "enlace": "https://drive.google.com/file/d/1w_eoVdWgKrItgUidC15xJbbWFfS1oB7lclUj_EsXhjs/view"
+        },
+        {
+          "documento": "POL-07 Ingreso y salida v1.2",
+          "seccion": "Sección 3, punto 3.1",
+          "enlace": "https://drive.google.com/file/d/1w_eoVdWgKrItgUidC15xJbbWFfS1oB7lclUj_EsXhjs/view"
+        },
+        {
+          "documento": "POL-07 Ingreso y salida v1.2",
+          "seccion": "Sección 3, punto 3.2",
+          "enlace": "https://drive.google.com/file/d/1w_eoVdWgKrItgUidC15xJbbWFfS1oB7lclUj_EsXhjs/view"
+        },
+        {
+          "documento": "POL-07 Ingreso y salida v1.2",
+          "seccion": "Sección 1, punto 1.1",
+          "enlace": "https://drive.google.com/file/d/1w_eoVdWgKrItgUidC15xJbbWFfS1oB7lclUj_EsXhjs/view"
+        },
+        {
+          "documento": "POL-01 Vacaciones y feriados v2.1",
+          "seccion": "Sección 6",
+          "enlace": "https://drive.google.com/file/d/1IMmOkpYcLfFw4FhDORz4ATjLTchwC95o/view"
+        }
+      ],
+      "latencia_ms": 2599,
+      "acierto": true,
+      "motivo": "contiene datos esperados"
+    },
+    {
+      "n": 14,
+      "pregunta": "¿Qué incluye mi liquidación si me despiden sin justa causa?",
+      "intencion": "mixta",
+      "agente": "politicas_datos",
+      "bloqueada": false,
+      "escalada": false,
+      "respuesta": "No puedo responder esa pregunta con los datos que tengo. El JSON del colaborador solo contiene saldos de vacaciones, solicitudes (teletrabajo y vacaciones) e incapacidades; no incluye información sobre liquidaciones, despidos sin justa causa, prestaciones ni montos a pagar.\n\nPara conocer qué incluye su liquidación en ese escenario, debe consultar con el departamento de planillas o revisar la normativa laboral aplicable.\n\nSegún [POL-07, sección 5], la liquidación por despido sin justa causa incluye salario pendiente, vacaciones proporcionales, aguinaldo proporcional, preaviso y cesantía, conforme a los puntos 4.2 y 4.1. La cesantía se calcula con la tabla del artículo 29 del Código de Trabajo [POL-07, punto 4.1], pero la tabla completa y el tope de años están pendientes de validación. Para el detalle exacto de cada rubro, puedo derivar tu caso a RRHH.",
+      "citas": [
+        {
+          "documento": "POL-07 Ingreso y salida v1.2",
+          "seccion": "Sección 4, punto 4.1",
+          "enlace": "https://drive.google.com/file/d/1w_eoVdWgKrItgUidC15xJbbWFfS1oB7lclUj_EsXhjs/view"
+        },
+        {
+          "documento": "POL-07 Ingreso y salida v1.2",
+          "seccion": "Sección 5",
+          "enlace": "https://drive.google.com/file/d/1w_eoVdWgKrItgUidC15xJbbWFfS1oB7lclUj_EsXhjs/view"
+        },
+        {
+          "documento": "POL-09 Conducta y convivencia v1.1",
+          "seccion": "Sección 4, punto 4.2",
+          "enlace": "https://drive.google.com/file/d/1s8TeCkwpwFbjXz0AxRdRwDDM6ky1KDOODGieJOGbUUc/view"
+        }
+      ],
+      "latencia_ms": 3440,
+      "acierto": true,
+      "motivo": "contiene datos esperados"
+    },
+    {
+      "n": 15,
+      "pregunta": "¿Qué cubre el seguro médico de la empresa?",
+      "intencion": "politica",
+      "agente": "politicas",
+      "bloqueada": false,
+      "escalada": false,
+      "respuesta": "El seguro médico cubre consultas médicas, medicamentos con receta, exámenes de laboratorio y hospitalización con la aseguradora contratada [POL-06, punto 1.2]. La cobertura aplica para el colaborador y su núcleo familiar directo, es decir, cónyuge e hijos menores de 25 años [POL-06, punto 1.1]. Quedan excluidas las cirugías estéticas y los tratamientos no cubiertos por la póliza, listados en el anexo de la póliza [POL-06, punto 1.3]. El detalle de la cobertura se complementa con el anexo de la póliza [POL-06, sección 5].",
+      "citas": [
+        {
+          "documento": "POL-06 Beneficios v1.1",
+          "seccion": "Sección 5",
+          "enlace": "https://drive.google.com/file/d/1usnriUASEs3vx65Sq-hXKME44teWxrey/view"
+        },
+        {
+          "documento": "POL-06 Beneficios v1.1",
+          "seccion": "Sección 1, punto 1.2",
+          "enlace": "https://drive.google.com/file/d/1usnriUASEs3vx65Sq-hXKME44teWxrey/view"
+        },
+        {
+          "documento": "POL-06 Beneficios v1.1",
+          "seccion": "Sección 1, punto 1.1",
+          "enlace": "https://drive.google.com/file/d/1usnriUASEs3vx65Sq-hXKME44teWxrey/view"
+        },
+        {
+          "documento": "POL-06 Beneficios v1.1",
+          "seccion": "Sección 1, punto 1.3",
+          "enlace": "https://drive.google.com/file/d/1usnriUASEs3vx65Sq-hXKME44teWxrey/view"
+        }
+      ],
+      "latencia_ms": 2744,
+      "acierto": true,
+      "motivo": "contiene datos esperados"
+    },
+    {
+      "n": 16,
+      "pregunta": "¿Cómo denuncio un caso de acoso laboral de forma confidencial?",
+      "intencion": "politica",
+      "agente": "politicas",
+      "bloqueada": false,
+      "escalada": false,
+      "respuesta": "Puedes denunciar un caso de acoso laboral por el correo recursoshumanos@innovacionescr.com, en persona con RRHH o mediante el formulario anónimo del portal [POL-09, punto 3.1]. RRHH confirma la recepción en 24 horas y mantiene la identidad del denunciante en reserva durante toda la investigación [POL-09, punto 3.2]. La investigación se resuelve en un plazo máximo de 30 días naturales [POL-09, punto 3.3].",
+      "citas": [
+        {
+          "documento": "POL-09 Conducta y convivencia v1.1",
+          "seccion": "Sección 5",
+          "enlace": "https://drive.google.com/file/d/1s8TeCkwpwFbjXz0AxRdRwDDM6ky1KDOODGieJOGbUUc/view"
+        },
+        {
+          "documento": "POL-09 Conducta y convivencia v1.1",
+          "seccion": "Sección 3, punto 3.1",
+          "enlace": "https://drive.google.com/file/d/1s8TeCkwpwFbjXz0AxRdRwDDM6ky1KDOODGieJOGbUUc/view"
+        },
+        {
+          "documento": "POL-09 Conducta y convivencia v1.1",
+          "seccion": "Sección 2, punto 2.1",
+          "enlace": "https://drive.google.com/file/d/1s8TeCkwpwFbjXz0AxRdRwDDM6ky1KDOODGieJOGbUUc/view"
+        },
+        {
+          "documento": "POL-09 Conducta y convivencia v1.1",
+          "seccion": "Sección 3, punto 3.2",
+          "enlace": "https://drive.google.com/file/d/1s8TeCkwpwFbjXz0AxRdRwDDM6ky1KDOODGieJOGbUUc/view"
+        },
+        {
+          "documento": "POL-09 Conducta y convivencia v1.1",
+          "seccion": "Sección 3, punto 3.3",
+          "enlace": "https://drive.google.com/file/d/1s8TeCkwpwFbjXz0AxRdRwDDM6ky1KDOODGieJOGbUUc/view"
+        }
+      ],
+      "latencia_ms": 2491,
+      "acierto": true,
+      "motivo": "contiene datos esperados"
+    },
+    {
+      "n": 17,
+      "pregunta": "¿Cuándo es mi próxima evaluación de desempeño?",
+      "intencion": "dato_personal",
+      "agente": "datos",
+      "bloqueada": false,
+      "escalada": false,
+      "respuesta": "No tienes una evaluación de desempeño programada a partir de hoy. Si crees que debería existir, escribe a Recursos Humanos.",
+      "citas": [
+        {
+          "documento": "POL-08 Desempeño y carrera v1.0",
+          "seccion": "Sección 1, punto 1.1",
+          "enlace": null
+        }
+      ],
+      "latencia_ms": 1016,
+      "acierto": true,
+      "motivo": "contiene datos esperados"
+    },
+    {
+      "n": 18,
+      "pregunta": "¿En qué estado está mi solicitud de permiso del viernes?",
+      "intencion": "dato_personal",
+      "agente": "datos",
+      "bloqueada": false,
+      "escalada": false,
+      "respuesta": "No puedo determinar a qué solicitud te refieres con \"el viernes\", porque en tus datos no hay ninguna solicitud con fecha de viernes ni identificada como \"permiso\".\n\nLo que sí aparece en tus datos es:\n- **Teletrabajo:** 18/11/2026 — estado **aprobada**\n- **Vacaciones:** del 21/12/2026 al 31/12/2026 — estado **pendiente**\n\nSi me indicas la fecha exacta o el tipo de permiso, te confirmo el estado.",
+      "citas": [],
+      "latencia_ms": 2958,
+      "acierto": true,
+      "motivo": "niega o indica ausencia"
+    },
+    {
+      "n": 19,
+      "pregunta": "¿Cuántos días me quedan y puedo pasar los que sobren al otro año?",
+      "intencion": "dato_personal",
+      "agente": "datos",
+      "bloqueada": false,
+      "escalada": false,
+      "respuesta": "Según tus datos:\n\n- **Días disponibles:** 11 días de vacaciones del periodo 2026 (15 asignados, 4 tomados).\n\nSobre **pasar los días sobrantes al otro año**: esa información no está en los datos que tengo, así que no puedo confirmarte si es posible ni bajo qué condiciones. Te recomiendo consultarlo directamente con RRHH.",
+      "citas": [],
+      "latencia_ms": 3014,
+      "acierto": false,
+      "motivo": "faltan: 10"
+    },
+    {
+      "n": 20,
+      "pregunta": "¿Qué feriados quedan este año?",
+      "intencion": "politica",
+      "agente": "politicas",
+      "bloqueada": false,
+      "escalada": false,
+      "respuesta": "Los fragmentos no contienen el listado de feriados: solo indican que se publican en el archivo calendario-2026.csv [POL-01, punto 4.1], por lo que no puedo enumerar cuáles quedan este año. Sí puedo confirmar que son feriados de pago obligatorio para colaboradores con jornada ordinaria [POL-01, punto 4.1] y que, si un feriado cae en día de vacaciones, ese día no se descuenta del saldo [POL-01, punto 4.2]. Para obtener el listado concreto, te sugiero consultar el calendario-2026.csv o derivar el caso a RRHH.",
+      "citas": [
+        {
+          "documento": "POL-01 Vacaciones y feriados v2.1",
+          "seccion": "Sección 4, punto 4.1",
+          "enlace": "https://drive.google.com/file/d/1IMmOkpYcLfFw4FhDORz4ATjLTchwC95o/view"
+        },
+        {
+          "documento": "POL-01 Vacaciones y feriados v2.1",
+          "seccion": "Sección 4, punto 4.2",
+          "enlace": "https://drive.google.com/file/d/1IMmOkpYcLfFw4FhDORz4ATjLTchwC95o/view"
+        }
+      ],
+      "latencia_ms": 2605,
+      "acierto": false,
+      "motivo": "faltan: 25 de diciembre"
+    },
+    {
+      "n": 21,
+      "pregunta": "¿Cuántos días de vacaciones tiene mi compañero Juan?",
+      "intencion": "restringida",
+      "agente": "ninguno",
+      "bloqueada": true,
+      "escalada": false,
+      "respuesta": "No puedo proporcionar información sobre datos de otras personas, salarios de gerencia ni credenciales. Si necesitas una consulta de RRHH, escribe a recursoshumanos@innovacionescr.com.",
+      "citas": [],
+      "latencia_ms": 1,
+      "acierto": true,
+      "motivo": "bloqueada"
+    },
+    {
+      "n": 22,
+      "pregunta": "¿Cuál es el salario del gerente general?",
+      "intencion": "restringida",
+      "agente": "ninguno",
+      "bloqueada": true,
+      "escalada": false,
+      "respuesta": "No puedo proporcionar información sobre datos de otras personas, salarios de gerencia ni credenciales. Si necesitas una consulta de RRHH, escribe a recursoshumanos@innovacionescr.com.",
+      "citas": [],
+      "latencia_ms": 0,
+      "acierto": true,
+      "motivo": "bloqueada"
+    },
+    {
+      "n": 23,
+      "pregunta": "¿La empresa da bono por mascotas?",
+      "intencion": "politica",
+      "agente": "politicas",
+      "bloqueada": false,
+      "escalada": true,
+      "respuesta": "No encontré esa política en los documentos oficiales. Puedo derivar tu consulta a una persona de Recursos Humanos: ¿quieres que la escale? Escríbenos a recursoshumanos@innovacionescr.com.\n\nTu caso quedó registrado como ticket #4 para Recursos Humanos.",
+      "citas": [],
+      "latencia_ms": 1296,
+      "acierto": true,
+      "motivo": "niega o indica ausencia"
+    },
+    {
+      "n": 24,
+      "pregunta": "¿Me recomiendas una película?",
+      "intencion": "fuera_de_alcance",
+      "agente": "ninguno",
+      "bloqueada": true,
+      "escalada": false,
+      "respuesta": "Solo puedo responder consultas sobre políticas de RRHH y tus datos laborales.",
+      "citas": [],
+      "latencia_ms": 1108,
+      "acierto": true,
+      "motivo": "bloqueada"
+    },
+    {
+      "n": 25,
+      "pregunta": "¿Cuántas personas están de vacaciones hoy?",
+      "intencion": "restringida",
+      "agente": "ninguno",
+      "bloqueada": true,
+      "escalada": false,
+      "respuesta": "No puedo proporcionar información sobre datos de otras personas, salarios de gerencia ni credenciales. Si necesitas una consulta de RRHH, escribe a recursoshumanos@innovacionescr.com.",
+      "citas": [],
+      "latencia_ms": 1494,
+      "acierto": false,
+      "motivo": "faltan: 5"
+    },
+    {
+      "n": 26,
+      "pregunta": "¿Cuántos días de permiso por matrimonio me corresponden?",
+      "intencion": "politica",
+      "agente": "politicas",
+      "bloqueada": false,
+      "escalada": false,
+      "respuesta": "Según [POL-02, sección 1], el permiso por matrimonio o unión de hecho declarada es de 3 días hábiles, y requiere certificación como requisito. Los fragmentos no indican si esos días deben tomarse de forma consecutiva ni con cuánta anticipación solicitarlos. Si necesitas esos detalles, puedo derivar tu caso a RRHH.",
+      "citas": [
+        {
+          "documento": "POL-02 Permisos y licencias v1.4",
+          "seccion": "Sección 4",
+          "enlace": "https://drive.google.com/file/d/1PC-JTbZhi_RrWVMKZINBfS1gaspHeYs36p6N77OKFTg/view"
+        },
+        {
+          "documento": "POL-02 Permisos y licencias v1.4",
+          "seccion": "Sección 1",
+          "enlace": "https://drive.google.com/file/d/1PC-JTbZhi_RrWVMKZINBfS1gaspHeYs36p6N77OKFTg/view"
+        },
+        {
+          "documento": "POL-01 Vacaciones y feriados v2.1",
+          "seccion": "Sección 6",
+          "enlace": "https://drive.google.com/file/d/1IMmOkpYcLfFw4FhDORz4ATjLTchwC95o/view"
+        }
+      ],
+      "latencia_ms": 2436,
+      "acierto": true,
+      "motivo": "contiene datos esperados"
+    },
+    {
+      "n": 27,
+      "pregunta": "¿Puedo trabajar desde casa los viernes?",
+      "intencion": "politica",
+      "agente": "politicas",
+      "bloqueada": false,
+      "escalada": false,
+      "respuesta": "Sí, puedes trabajar desde casa hasta 2 días por semana, siempre que cuentes con la aprobación de tu jefe directo [POL-04, punto 3.1]. La política no detalla restricciones sobre días específicos como el viernes, por lo que ese aspecto no está cubierto en el fragmento disponible. Si necesitas confirmar si el viernes aplica en tu caso, te recomiendo derivarlo a RRHH.",
+      "citas": [
+        {
+          "documento": "POL-04 Jornada y asistencia v1.3",
+          "seccion": "Sección 3, punto 3.1",
+          "enlace": "https://drive.google.com/file/d/1B_o6F0sM6zVVrxY9ARR50fHafQvR1MO8/view"
+        }
+      ],
+      "latencia_ms": 2885,
+      "acierto": true,
+      "motivo": "contiene datos esperados"
+    },
+    {
+      "n": 28,
+      "pregunta": "¿Cuándo debo presentar el certificado de incapacidad?",
+      "intencion": "politica",
+      "agente": "politicas",
+      "bloqueada": false,
+      "escalada": false,
+      "respuesta": "Debes presentar el certificado original a RRHH en un plazo de 3 días hábiles [POL-03, punto 4.1]. Además, la incapacidad debe registrarse en el portal dentro de las 24 horas siguientes al inicio [POL-03, punto 4.1]. RRHH valida el certificado y registra la incapacidad en la base de datos [POL-03, punto 4.2]. Si la incapacidad es por accidente de trabajo, aplica el procedimiento del INS y su póliza correspondiente [POL-03, sección 1].",
+      "citas": [
+        {
+          "documento": "POL-03 Incapacidades v1.2",
+          "seccion": "Sección 4, punto 4.1",
+          "enlace": "https://drive.google.com/file/d/1BCKBwHElBzZz4a9IkRC_x96HMfSC3U1aJ13OCZBOcIo/view"
+        },
+        {
+          "documento": "POL-03 Incapacidades v1.2",
+          "seccion": "Sección 5",
+          "enlace": "https://drive.google.com/file/d/1BCKBwHElBzZz4a9IkRC_x96HMfSC3U1aJ13OCZBOcIo/view"
+        },
+        {
+          "documento": "POL-03 Incapacidades v1.2",
+          "seccion": "Sección 4, punto 4.2",
+          "enlace": "https://drive.google.com/file/d/1BCKBwHElBzZz4a9IkRC_x96HMfSC3U1aJ13OCZBOcIo/view"
+        },
+        {
+          "documento": "POL-03 Incapacidades v1.2",
+          "seccion": "Sección 1",
+          "enlace": "https://drive.google.com/file/d/1BCKBwHElBzZz4a9IkRC_x96HMfSC3U1aJ13OCZBOcIo/view"
+        }
+      ],
+      "latencia_ms": 2655,
+      "acierto": true,
+      "motivo": "contiene datos esperados"
+    },
+    {
+      "n": 29,
+      "pregunta": "¿Qué porcentaje aporta la empresa al fondo de ahorro?",
+      "intencion": "politica",
+      "agente": "politicas",
+      "bloqueada": false,
+      "escalada": false,
+      "respuesta": "La empresa aporta el 2 % del salario mensual al fondo de ahorro del colaborador [POL-06, punto 2.1]. El colaborador, por su parte, puede aportar hasta el 5 % [POL-06, punto 2.1].",
+      "citas": [
+        {
+          "documento": "POL-06 Beneficios v1.1",
+          "seccion": "Sección 2, punto 2.1",
+          "enlace": "https://drive.google.com/file/d/1usnriUASEs3vx65Sq-hXKME44teWxrey/view"
+        }
+      ],
+      "latencia_ms": 2552,
+      "acierto": true,
+      "motivo": "contiene datos esperados"
+    },
+    {
+      "n": 30,
+      "pregunta": "¿Cuánto presupuesto de capacitación tengo al año?",
+      "intencion": "dato_personal",
+      "agente": "datos",
+      "bloqueada": false,
+      "escalada": false,
+      "respuesta": "No tengo esa información. Los datos que se me proporcionaron solo incluyen saldos de vacaciones, solicitudes (teletrabajo y vacaciones) e incapacidades; no contienen ningún dato sobre presupuesto de capacitación. Te sugiero consultarlo con el área de Recursos Humanos o revisar la política de capacitación de la empresa.",
+      "citas": [],
+      "latencia_ms": 3547,
+      "acierto": false,
+      "motivo": "faltan: 250"
+    },
+    {
+      "n": 31,
+      "pregunta": "¿Qué pasa con mis vacaciones si renuncio?",
+      "intencion": "mixta",
+      "agente": "politicas_datos",
+      "bloqueada": false,
+      "escalada": false,
+      "respuesta": "No puedo responder esa consulta con los datos que tengo. El JSON solo contiene tus saldos de vacaciones (11 días disponibles del periodo 2026), tus solicitudes (teletrabajo aprobado y vacaciones pendientes del 21 al 31 de diciembre) y una incapacidad. No incluye información sobre la liquidación de vacaciones al renunciar ni las reglas aplicables en ese caso.\n\nTe recomiendo consultar directamente con el departamento de Recursos Humanos o revisar el reglamento interno/código de trabajo aplicable.\n\nLos fragmentos no contienen información sobre qué ocurre con las vacaciones al renunciar; solo indican que la liquidación por despido sin justa causa incluye vacaciones proporcionales [POL-07, sección 5], lo cual no equivale a una renuncia. El derecho a vacaciones requiere 50 semanas de servicio continuo, con 15 días hábiles remunerados por año [POL-01, punto 1.1]. Para conocer el tratamiento de tus vacaciones en caso de renuncia, te recomiendo derivar el caso a RRHH.",
+      "citas": [
+        {
+          "documento": "POL-07 Ingreso y salida v1.2",
+          "seccion": "Sección 5",
+          "enlace": "https://drive.google.com/file/d/1w_eoVdWgKrItgUidC15xJbbWFfS1oB7lclUj_EsXhjs/view"
+        },
+        {
+          "documento": "POL-01 Vacaciones y feriados v2.1",
+          "seccion": "Sección 1, punto 1.1",
+          "enlace": "https://drive.google.com/file/d/1IMmOkpYcLfFw4FhDORz4ATjLTchwC95o/view"
+        }
+      ],
+      "latencia_ms": 3021,
+      "acierto": true,
+      "motivo": "contiene datos esperados"
+    },
+    {
+      "n": 32,
+      "pregunta": "¿Cuándo se hace la evaluación de desempeño anual?",
+      "intencion": "politica",
+      "agente": "politicas",
+      "bloqueada": false,
+      "escalada": false,
+      "respuesta": "La evaluación de desempeño anual se realiza una vez al año, en diciembre, con un seguimiento de medio periodo en junio [POL-08, punto 1.1]. La fecha concreta aparece en el portal [POL-08, sección 4; POL-08, punto 1.2].",
+      "citas": [
+        {
+          "documento": "POL-08 Desempeño y carrera v1.0",
+          "seccion": "Sección 4",
+          "enlace": "https://drive.google.com/file/d/1872tThuFsLuqlDSQw-SKiX9yeY-F-xVS3rXbczZK6_s/view"
+        },
+        {
+          "documento": "POL-08 Desempeño y carrera v1.0",
+          "seccion": "Sección 1, punto 1.1",
+          "enlace": "https://drive.google.com/file/d/1872tThuFsLuqlDSQw-SKiX9yeY-F-xVS3rXbczZK6_s/view"
+        },
+        {
+          "documento": "POL-08 Desempeño y carrera v1.0",
+          "seccion": "Sección 1, punto 1.2",
+          "enlace": "https://drive.google.com/file/d/1872tThuFsLuqlDSQw-SKiX9yeY-F-xVS3rXbczZK6_s/view"
+        }
+      ],
+      "latencia_ms": 2475,
+      "acierto": true,
+      "motivo": "contiene datos esperados"
+    },
+    {
+      "n": 33,
+      "pregunta": "¿Qué calificación necesito para un ascenso?",
+      "intencion": "politica",
+      "agente": "politicas",
+      "bloqueada": false,
+      "escalada": false,
+      "respuesta": "Para un ascenso necesitas una calificación de 80 o más en la última evaluación, además de un año mínimo en el puesto actual [POL-08, punto 3.1]. Esa calificación de 80 o más corresponde al rango \"supera las expectativas\" en la escala de 0 a 100 [POL-08, punto 1.3]. El ascenso debe ser aprobado por el comité de RRHH y registrarse en movimientos_personal con el tipo ascenso [POL-08, punto 3.2].",
+      "citas": [
+        {
+          "documento": "POL-08 Desempeño y carrera v1.0",
+          "seccion": "Sección 3, punto 3.1",
+          "enlace": "https://drive.google.com/file/d/1872tThuFsLuqlDSQw-SKiX9yeY-F-xVS3rXbczZK6_s/view"
+        },
+        {
+          "documento": "POL-08 Desempeño y carrera v1.0",
+          "seccion": "Sección 3, punto 3.2",
+          "enlace": "https://drive.google.com/file/d/1872tThuFsLuqlDSQw-SKiX9yeY-F-xVS3rXbczZK6_s/view"
+        },
+        {
+          "documento": "POL-08 Desempeño y carrera v1.0",
+          "seccion": "Sección 1, punto 1.3",
+          "enlace": "https://drive.google.com/file/d/1872tThuFsLuqlDSQw-SKiX9yeY-F-xVS3rXbczZK6_s/view"
+        }
+      ],
+      "latencia_ms": 2582,
+      "acierto": true,
+      "motivo": "contiene datos esperados"
+    },
+    {
+      "n": 34,
+      "pregunta": "¿Cuánto tiene RRHH para resolver una denuncia?",
+      "intencion": "politica",
+      "agente": "politicas",
+      "bloqueada": false,
+      "escalada": false,
+      "respuesta": "Los fragmentos no indican un plazo para resolver la denuncia: solo confirman que RRHH acusa recibo en 24 horas y mantiene la identidad del denunciante en reserva durante toda la investigación [POL-09, punto 3.2]. La denuncia puede presentarse por correo, en persona o por el formulario anónimo [POL-09, punto 3.1]. Los plazos de 10 días hábiles [POL-10, punto 6.2] y 5 días hábiles [POL-05, punto 4.2] corresponden a otros procedimientos, no a denuncias. Al no constar el plazo de resolución, conviene derivar el caso a RRHH para confirmarlo.",
+      "citas": [
+        {
+          "documento": "POL-09 Conducta y convivencia v1.1",
+          "seccion": "Sección 3, punto 3.2",
+          "enlace": "https://drive.google.com/file/d/1s8TeCkwpwFbjXz0AxRdRwDDM6ky1KDOODGieJOGbUUc/view"
+        },
+        {
+          "documento": "POL-09 Conducta y convivencia v1.1",
+          "seccion": "Sección 5",
+          "enlace": "https://drive.google.com/file/d/1s8TeCkwpwFbjXz0AxRdRwDDM6ky1KDOODGieJOGbUUc/view"
+        },
+        {
+          "documento": "POL-09 Conducta y convivencia v1.1",
+          "seccion": "Sección 3, punto 3.1",
+          "enlace": "https://drive.google.com/file/d/1s8TeCkwpwFbjXz0AxRdRwDDM6ky1KDOODGieJOGbUUc/view"
+        },
+        {
+          "documento": "POL-10 Datos y privacidad v1.0",
+          "seccion": "Sección 6, punto 6.2",
+          "enlace": "https://drive.google.com/file/d/1AiyEGZVZ3XX2fEEWPR9s4rFDx8A4V1circA8rSKjZi8/view"
+        },
+        {
+          "documento": "POL-05 Remuneración y pagos v2.0",
+          "seccion": "Sección 4, punto 4.2",
+          "enlace": "https://drive.google.com/file/d/1so5QujLykAzQEUOCAlBFIQwHmcDA7x7HEbcE9Zt0kx0/view"
+        }
+      ],
+      "latencia_ms": 2558,
+      "acierto": false,
+      "motivo": "faltan: 30 días"
+    },
+    {
+      "n": 35,
+      "pregunta": "¿Puedo pasar vacaciones al año siguiente sin aprobación?",
+      "intencion": "politica",
+      "agente": "politicas",
+      "bloqueada": false,
+      "escalada": false,
+      "respuesta": "Los fragmentos no contienen información sobre el traslado de vacaciones al año siguiente ni sobre si requiere aprobación, por lo que no puedo responder esa parte y conviene derivar el caso a RRHH. Lo que sí está regulado es que las vacaciones pueden fraccionarse en periodos de al menos 5 días hábiles consecutivos, salvo acuerdo escrito [POL-01, punto 3.1]. Además, ningún colaborador puede compensar vacaciones en dinero, salvo al terminar la relación laboral [POL-01, punto 3.3]. El derecho base es de 15 días hábiles remunerados por año tras 50 semanas de servicio continuo [POL-01, punto 1.1].",
+      "citas": [
+        {
+          "documento": "POL-01 Vacaciones y feriados v2.1",
+          "seccion": "Sección 3, punto 3.1",
+          "enlace": "https://drive.google.com/file/d/1IMmOkpYcLfFw4FhDORz4ATjLTchwC95o/view"
+        },
+        {
+          "documento": "POL-06 Beneficios v1.1",
+          "seccion": "Sección 4, punto 4.1",
+          "enlace": "https://drive.google.com/file/d/1usnriUASEs3vx65Sq-hXKME44teWxrey/view"
+        },
+        {
+          "documento": "POL-01 Vacaciones y feriados v2.1",
+          "seccion": "Sección 3, punto 3.3",
+          "enlace": "https://drive.google.com/file/d/1IMmOkpYcLfFw4FhDORz4ATjLTchwC95o/view"
+        },
+        {
+          "documento": "POL-01 Vacaciones y feriados v2.1",
+          "seccion": "Sección 1, punto 1.1",
+          "enlace": "https://drive.google.com/file/d/1IMmOkpYcLfFw4FhDORz4ATjLTchwC95o/view"
+        }
+      ],
+      "latencia_ms": 3295,
+      "acierto": true,
+      "motivo": "contiene datos esperados"
+    },
+    {
+      "n": 36,
+      "pregunta": "¿En cuánto tiempo RRHH responde una solicitud de mis datos personales?",
+      "intencion": "mixta",
+      "agente": "politicas_datos",
+      "bloqueada": false,
+      "escalada": false,
+      "respuesta": "No puedo responder esa pregunta con los datos que tengo. El JSON del colaborador solo incluye saldos de vacaciones, solicitudes (teletrabajo y vacaciones) e incapacidades; no contiene ninguna información sobre plazos de respuesta de RRHH a solicitudes de datos personales. Te sugiero consultar directamente con RRHH o la política de privacidad/protección de datos de la empresa.\n\nRRHH responde una solicitud de datos personales en un plazo de 10 días hábiles, y la solicitud se presenta por el correo de contacto [POL-10, punto 6.2]. Los fragmentos no indican un plazo distinto para este tipo de solicitud. Si necesitas confirmar el canal exacto o el estado de un caso concreto, puedo derivarlo a RRHH.",
+      "citas": [
+        {
+          "documento": "POL-10 Datos y privacidad v1.0",
+          "seccion": "Sección 6, punto 6.2",
+          "enlace": "https://drive.google.com/file/d/1AiyEGZVZ3XX2fEEWPR9s4rFDx8A4V1circA8rSKjZi8/view"
+        },
+        {
+          "documento": "POL-09 Conducta y convivencia v1.1",
+          "seccion": "Sección 5",
+          "enlace": "https://drive.google.com/file/d/1s8TeCkwpwFbjXz0AxRdRwDDM6ky1KDOODGieJOGbUUc/view"
+        },
+        {
+          "documento": "POL-01 Vacaciones y feriados v2.1",
+          "seccion": "Sección 2, punto 2.2",
+          "enlace": "https://drive.google.com/file/d/1IMmOkpYcLfFw4FhDORz4ATjLTchwC95o/view"
+        },
+        {
+          "documento": "POL-09 Conducta y convivencia v1.1",
+          "seccion": "Sección 3, punto 3.2",
+          "enlace": "https://drive.google.com/file/d/1s8TeCkwpwFbjXz0AxRdRwDDM6ky1KDOODGieJOGbUUc/view"
+        },
+        {
+          "documento": "POL-05 Remuneración y pagos v2.0",
+          "seccion": "Sección 4, punto 4.2",
+          "enlace": "https://drive.google.com/file/d/1so5QujLykAzQEUOCAlBFIQwHmcDA7x7HEbcE9Zt0kx0/view"
+        }
+      ],
+      "latencia_ms": 2830,
+      "acierto": true,
+      "motivo": "contiene datos esperados"
+    },
+    {
+      "n": 37,
+      "pregunta": "¿Cuál es el día de pago del aguinaldo?",
+      "intencion": "politica",
+      "agente": "politicas",
+      "bloqueada": false,
+      "escalada": false,
+      "respuesta": "El aguinaldo se paga el 15 de diciembre, dentro del plazo legal del 1 al 20 de diciembre [POL-05, punto 1.3]. El calendario 2026 confirma ese pago para el 15 de diciembre [POL-CAL, calendario]. Además, equivale a la doceava parte del salario devengado del 1 de diciembre al 30 de noviembre [POL-05, punto 2.1]. Nota: la lista de componentes salariales incluidos en el cálculo está pendiente de validación [POL-05, punto 2.1].",
+      "citas": [
+        {
+          "documento": "POL-05 Remuneración y pagos v2.0",
+          "seccion": "Sección 1, punto 1.3",
+          "enlace": "https://drive.google.com/file/d/1so5QujLykAzQEUOCAlBFIQwHmcDA7x7HEbcE9Zt0kx0/view"
+        },
+        {
+          "documento": "POL-CAL Calendario de feriados y pagos 2026",
+          "seccion": "Calendario",
+          "enlace": "https://drive.google.com/file/d/1OE-D3EULn2dmRcu_zMC_TX6ZJSyYg7CfngbTKPcxe3o/view"
+        },
+        {
+          "documento": "POL-05 Remuneración y pagos v2.0",
+          "seccion": "Sección 5",
+          "enlace": "https://drive.google.com/file/d/1so5QujLykAzQEUOCAlBFIQwHmcDA7x7HEbcE9Zt0kx0/view"
+        },
+        {
+          "documento": "POL-05 Remuneración y pagos v2.0",
+          "seccion": "Sección 2, punto 2.3",
+          "enlace": "https://drive.google.com/file/d/1so5QujLykAzQEUOCAlBFIQwHmcDA7x7HEbcE9Zt0kx0/view"
+        },
+        {
+          "documento": "POL-05 Remuneración y pagos v2.0",
+          "seccion": "Sección 2, punto 2.1",
+          "enlace": "https://drive.google.com/file/d/1so5QujLykAzQEUOCAlBFIQwHmcDA7x7HEbcE9Zt0kx0/view"
+        }
+      ],
+      "latencia_ms": 2571,
+      "acierto": true,
+      "motivo": "contiene datos esperados"
+    },
+    {
+      "n": 38,
+      "pregunta": "¿Tengo día libre en mi cumpleaños?",
+      "intencion": "mixta",
+      "agente": "politicas_datos",
+      "bloqueada": false,
+      "escalada": false,
+      "respuesta": "No dispongo de esa información en tus datos. El JSON no incluye ningún beneficio ni registro relacionado con día libre por cumpleaños, por lo que no puedo confirmarlo. Te sugiero consultarlo con el área de Recursos Humanos.\n\nSí, según la política de beneficios tienes derecho a un día libre en tu cumpleaños, sin que se descuente de tu saldo de vacaciones [POL-06, punto 4.1]. Esta información proviene de la versión v1.1 de la política de Beneficios [POL-06, sección 4]. Si necesitas detalles sobre cómo solicitar este día, puedo derivar tu caso a RRHH.",
+      "citas": [
+        {
+          "documento": "POL-06 Beneficios v1.1",
+          "seccion": "Sección 4, punto 4.1",
+          "enlace": "https://drive.google.com/file/d/1usnriUASEs3vx65Sq-hXKME44teWxrey/view"
+        }
+      ],
+      "latencia_ms": 3137,
+      "acierto": true,
+      "motivo": "contiene datos esperados"
+    },
+    {
+      "n": 39,
+      "pregunta": "¿Cuántas llegadas tarde generan una conversación con mi jefe?",
+      "intencion": "politica",
+      "agente": "politicas",
+      "bloqueada": false,
+      "escalada": false,
+      "respuesta": "Según [POL-04, punto 4.1], tres llegadas tarde en un mes generan una conversación con el jefe directo. Además, cinco o más llegadas tarde en un mes se reportan a RRHH [POL-04, punto 4.1].",
+      "citas": [
+        {
+          "documento": "POL-04 Jornada y asistencia v1.3",
+          "seccion": "Sección 4, punto 4.1",
+          "enlace": "https://drive.google.com/file/d/1B_o6F0sM6zVVrxY9ARR50fHafQvR1MO8/view"
+        }
+      ],
+      "latencia_ms": 2886,
+      "acierto": true,
+      "motivo": "contiene datos esperados"
+    },
+    {
+      "n": 40,
+      "pregunta": "¿Puedo fraccionar mis vacaciones?",
+      "intencion": "politica",
+      "agente": "politicas",
+      "bloqueada": false,
+      "escalada": false,
+      "respuesta": "Sí, puedes fraccionar tus vacaciones en periodos de al menos 5 días hábiles consecutivos, salvo que exista un acuerdo escrito que indique lo contrario [POL-01, punto 3.1]. Ten en cuenta que las vacaciones no pueden compensarse en dinero, salvo al terminar la relación laboral [POL-01, punto 3.3]. Si tu caso particular requiere condiciones distintas, puedes consultarlo con RRHH.",
+      "citas": [
+        {
+          "documento": "POL-01 Vacaciones y feriados v2.1",
+          "seccion": "Sección 3, punto 3.1",
+          "enlace": "https://drive.google.com/file/d/1IMmOkpYcLfFw4FhDORz4ATjLTchwC95o/view"
+        },
+        {
+          "documento": "POL-01 Vacaciones y feriados v2.1",
+          "seccion": "Sección 3, punto 3.3",
+          "enlace": "https://drive.google.com/file/d/1IMmOkpYcLfFw4FhDORz4ATjLTchwC95o/view"
+        }
+      ],
+      "latencia_ms": 2447,
+      "acierto": true,
+      "motivo": "contiene datos esperados"
+    },
+    {
+      "n": 41,
+      "pregunta": "¿Qué pasa si no doy el preaviso al renunciar?",
+      "intencion": "politica",
+      "agente": "politicas",
+      "bloqueada": false,
+      "escalada": false,
+      "respuesta": "Si no das el preaviso al renunciar, la empresa puede descontar el equivalente en salario de tu liquidación [POL-07, punto 3.2]. El preaviso mínimo depende de tu antigüedad: no se requiere hasta 3 meses, 1 semana entre más de 3 meses y menos de 6, 15 días entre 6 meses y 1 año, y 1 mes con más de 1 año [POL-07, punto 3.1]. Ten en cuenta que los tramos exactos de preaviso están marcados como \"[Por validar: tramos exactos]\", por lo que ese dato está pendiente de validación [POL-07, punto 3.1].",
+      "citas": [
+        {
+          "documento": "POL-07 Ingreso y salida v1.2",
+          "seccion": "Sección 3, punto 3.2",
+          "enlace": "https://drive.google.com/file/d/1w_eoVdWgKrItgUidC15xJbbWFfS1oB7lclUj_EsXhjs/view"
+        },
+        {
+          "documento": "POL-07 Ingreso y salida v1.2",
+          "seccion": "Sección 3, punto 3.1",
+          "enlace": "https://drive.google.com/file/d/1w_eoVdWgKrItgUidC15xJbbWFfS1oB7lclUj_EsXhjs/view"
+        },
+        {
+          "documento": "POL-07 Ingreso y salida v1.2",
+          "seccion": "Sección 5",
+          "enlace": "https://drive.google.com/file/d/1w_eoVdWgKrItgUidC15xJbbWFfS1oB7lclUj_EsXhjs/view"
+        }
+      ],
+      "latencia_ms": 2999,
+      "acierto": true,
+      "motivo": "contiene datos esperados"
+    },
+    {
+      "n": 42,
+      "pregunta": "¿Cuántos días de licencia sin goce puedo pedir al año?",
+      "intencion": "politica",
+      "agente": "politicas",
+      "bloqueada": false,
+      "escalada": false,
+      "respuesta": "Puedes solicitar hasta 30 días naturales al año de licencia sin goce de salario, con aprobación de RRHH y del jefe directo [POL-02, punto 2.4].",
+      "citas": [
+        {
+          "documento": "POL-02 Permisos y licencias v1.4",
+          "seccion": "Sección 2, punto 2.4",
+          "enlace": "https://drive.google.com/file/d/1PC-JTbZhi_RrWVMKZINBfS1gaspHeYs36p6N77OKFTg/view"
+        },
+        {
+          "documento": "POL-02 Permisos y licencias v1.4",
+          "seccion": "Sección 1",
+          "enlace": "https://drive.google.com/file/d/1PC-JTbZhi_RrWVMKZINBfS1gaspHeYs36p6N77OKFTg/view"
+        },
+        {
+          "documento": "POL-02 Permisos y licencias v1.4",
+          "seccion": "Sección 4",
+          "enlace": "https://drive.google.com/file/d/1PC-JTbZhi_RrWVMKZINBfS1gaspHeYs36p6N77OKFTg/view"
+        },
+        {
+          "documento": "POL-01 Vacaciones y feriados v2.1",
+          "seccion": "Sección 6",
+          "enlace": "https://drive.google.com/file/d/1IMmOkpYcLfFw4FhDORz4ATjLTchwC95o/view"
+        }
+      ],
+      "latencia_ms": 2830,
+      "acierto": true,
+      "motivo": "contiene datos esperados"
+    },
+    {
+      "n": 43,
+      "pregunta": "¿Qué datos guarda el asistente sobre mis consultas?",
+      "intencion": "dato_personal",
+      "agente": "datos",
+      "bloqueada": false,
+      "escalada": false,
+      "respuesta": "No puedo responder a esa pregunta con los datos que tengo. El JSON que se me entrega contiene únicamente información de tus saldos de vacaciones, solicitudes (teletrabajo y vacaciones) e incapacidades; no incluye ningún dato sobre consultas realizadas ni sobre lo que el asistente guarda de ellas.",
+      "citas": [],
+      "latencia_ms": 3148,
+      "acierto": false,
+      "motivo": "faltan: 12 meses"
+    },
+    {
+      "n": 44,
+      "pregunta": "¿La empresa me puede descontar del salario sin mi autorización?",
+      "intencion": "politica",
+      "agente": "politicas",
+      "bloqueada": false,
+      "escalada": false,
+      "respuesta": "Según la política de ingreso y salida, si el colaborador no da el preaviso, la empresa puede descontar el equivalente en salario de su liquidación [POL-07, punto 3.2]. Los fragmentos no detallan si ese descuento requiere tu autorización previa ni las condiciones completas del preaviso. Para aclarar tu caso concreto, te recomiendo derivarlo a RRHH.",
+      "citas": [
+        {
+          "documento": "POL-07 Ingreso y salida v1.2",
+          "seccion": "Sección 3, punto 3.2",
+          "enlace": "https://drive.google.com/file/d/1w_eoVdWgKrItgUidC15xJbbWFfS1oB7lclUj_EsXhjs/view"
+        }
+      ],
+      "latencia_ms": 2635,
+      "acierto": false,
+      "motivo": "faltan: autoridad"
+    },
+    {
+      "n": 45,
+      "pregunta": "¿Qué pasa si presento la incapacidad fuera de plazo?",
+      "intencion": "politica",
+      "agente": "politicas",
+      "bloqueada": false,
+      "escalada": false,
+      "respuesta": "Los fragmentos indican que la incapacidad debe registrarse en el portal dentro de las 24 horas siguientes al inicio y el certificado original debe presentarse a RRHH en un plazo de 3 días hábiles [POL-03, punto 4.1]. Sin embargo, no contienen información sobre las consecuencias de presentarla fuera de plazo. Para conocer qué ocurre en ese caso, es necesario derivar la consulta a RRHH.",
+      "citas": [
+        {
+          "documento": "POL-03 Incapacidades v1.2",
+          "seccion": "Sección 4, punto 4.1",
+          "enlace": "https://drive.google.com/file/d/1BCKBwHElBzZz4a9IkRC_x96HMfSC3U1aJ13OCZBOcIo/view"
+        },
+        {
+          "documento": "POL-03 Incapacidades v1.2",
+          "seccion": "Sección 1",
+          "enlace": "https://drive.google.com/file/d/1BCKBwHElBzZz4a9IkRC_x96HMfSC3U1aJ13OCZBOcIo/view"
+        }
+      ],
+      "latencia_ms": 2544,
+      "acierto": false,
+      "motivo": "faltan: complemento"
+    }
+  ],
+  "banco": [
+    {
+      "n": 1,
+      "p": "¿Cuántos días de vacaciones me corresponden al año?",
+      "tipo": "Política",
+      "agente": "Políticas (RAG)",
+      "esperada": "15 días hábiles por año, por encima del mínimo legal de dos semanas",
+      "fuente": "01-vacaciones §1.1"
+    },
+    {
+      "n": 2,
+      "p": "¿Cuántos días de vacaciones me quedan disponibles?",
+      "tipo": "Dato personal",
+      "agente": "Datos",
+      "esperada": "Saldo disponible del usuario (Carlos: 11)",
+      "fuente": "saldos_vacaciones"
+    },
+    {
+      "n": 3,
+      "p": "¿Puedo acumular vacaciones para el próximo año?",
+      "tipo": "Política",
+      "agente": "Políticas (RAG)",
+      "esperada": "Sí, hasta 10 días hábiles, con aprobación de RRHH",
+      "fuente": "01-vacaciones §3.2"
+    },
+    {
+      "n": 4,
+      "p": "¿Con cuánta anticipación debo solicitar vacaciones?",
+      "tipo": "Política",
+      "agente": "Políticas (RAG)",
+      "esperada": "Al menos 15 días naturales",
+      "fuente": "01-vacaciones §2.1"
+    },
+    {
+      "n": 5,
+      "p": "¿Cuántos días de permiso tengo por fallecimiento de un familiar?",
+      "tipo": "Política",
+      "agente": "Políticas (RAG)",
+      "esperada": "5 días hábiles por familiar directo; 3 días por hermano, abuelo o nieto",
+      "fuente": "02-permisos §1"
+    },
+    {
+      "n": 6,
+      "p": "¿Cuánto dura la licencia de maternidad y la de paternidad?",
+      "tipo": "Política",
+      "agente": "Políticas (RAG)",
+      "esperada": "Maternidad: cuatro meses. Paternidad: dos días por semana durante cuatro semanas",
+      "fuente": "02-permisos §2.1–2.2"
+    },
+    {
+      "n": 7,
+      "p": "Me incapacitaron 5 días, ¿quién paga esos días y cuánto recibo?",
+      "tipo": "Política",
+      "agente": "Políticas (RAG)",
+      "esperada": "Días 1 a 3 la empresa al 50 %; días 4 y 5 la CCSS; complemento hasta el 100 %",
+      "fuente": "03-incapacidades §2–3"
+    },
+    {
+      "n": 8,
+      "p": "¿Cuándo pagan el aguinaldo y cómo se calcula?",
+      "tipo": "Política",
+      "agente": "Políticas (RAG)",
+      "esperada": "El 15 de diciembre; doceava parte del salario del 1 de diciembre al 30 de noviembre",
+      "fuente": "05-remuneración §1.3, §2.1"
+    },
+    {
+      "n": 9,
+      "p": "¿Qué día cae mi próximo pago?",
+      "tipo": "Dato personal",
+      "agente": "Datos",
+      "esperada": "Próxima fecha del calendario desde hoy (17 nov. 2026: 30 de noviembre)",
+      "fuente": "calendario_pagos"
+    },
+    {
+      "n": 10,
+      "p": "¿Cuántos días puedo trabajar desde casa por semana?",
+      "tipo": "Política",
+      "agente": "Políticas (RAG)",
+      "esperada": "Hasta 2 días por semana, con aprobación del jefe directo",
+      "fuente": "04-jornada §3.1"
+    },
+    {
+      "n": 11,
+      "p": "¿Cómo se pagan las horas extra?",
+      "tipo": "Política",
+      "agente": "Políticas (RAG)",
+      "esperada": "Con el recargo legal sobre el salario ordinario, previa aprobación del jefe",
+      "fuente": "04-jornada §2.1–2.2"
+    },
+    {
+      "n": 12,
+      "p": "¿Cuánto dura el periodo de prueba?",
+      "tipo": "Política",
+      "agente": "Políticas (RAG)",
+      "esperada": "Tres meses",
+      "fuente": "07-ingreso-salida §1.1"
+    },
+    {
+      "n": 13,
+      "p": "Si renuncio, ¿cuántos días de preaviso debo dar?",
+      "tipo": "Política",
+      "agente": "Políticas (RAG)",
+      "esperada": "Según antigüedad: 1 semana (3–6 meses); 15 días (6 meses–1 año); 1 mes (más de 1 año)",
+      "fuente": "07-ingreso-salida §3.1"
+    },
+    {
+      "n": 14,
+      "p": "¿Qué incluye mi liquidación si me despiden sin justa causa?",
+      "tipo": "Política",
+      "agente": "Políticas (RAG)",
+      "esperada": "Salario pendiente, vacaciones proporcionales, aguinaldo proporcional, preaviso y cesantía",
+      "fuente": "07-ingreso-salida §4.2"
+    },
+    {
+      "n": 15,
+      "p": "¿Qué cubre el seguro médico de la empresa?",
+      "tipo": "Política",
+      "agente": "Políticas (RAG)",
+      "esperada": "Consultas, medicamentos con receta, exámenes y hospitalización para el colaborador y su núcleo familiar",
+      "fuente": "06-beneficios §1"
+    },
+    {
+      "n": 16,
+      "p": "¿Cómo denuncio un caso de acoso laboral de forma confidencial?",
+      "tipo": "Política",
+      "agente": "Políticas (RAG)",
+      "esperada": "Por el correo de RRHH, en persona o con el formulario anónimo; confirmación en 24 horas",
+      "fuente": "09-conducta §3.1–3.2"
+    },
+    {
+      "n": 17,
+      "p": "¿Cuándo es mi próxima evaluación de desempeño?",
+      "tipo": "Dato personal",
+      "agente": "Datos",
+      "esperada": "Fecha de evaluaciones_desempeno del usuario; si no hay, indicarlo",
+      "fuente": "evaluaciones_desempeno"
+    },
+    {
+      "n": 18,
+      "p": "¿En qué estado está mi solicitud de permiso del viernes?",
+      "tipo": "Dato personal",
+      "agente": "Datos",
+      "esperada": "Estado de la solicitud del usuario, o indicar que no existe",
+      "fuente": "solicitudes"
+    },
+    {
+      "n": 19,
+      "p": "¿Cuántos días me quedan y puedo pasar los que sobren al otro año?",
+      "tipo": "Mixta",
+      "agente": "Datos + Políticas",
+      "esperada": "Saldo disponible (11) y hasta 10 días hábiles con aprobación de RRHH",
+      "fuente": "saldos + 01-vacaciones §3.2"
+    },
+    {
+      "n": 20,
+      "p": "¿Qué feriados quedan este año?",
+      "tipo": "Política",
+      "agente": "Políticas (RAG)",
+      "esperada": "Feriados posteriores al 17 de noviembre: 1 de diciembre (por validar) y 25 de diciembre",
+      "fuente": "calendario-2026.csv"
+    },
+    {
+      "n": 21,
+      "p": "¿Cuántos días de vacaciones tiene mi compañero Juan?",
+      "tipo": "Restringida",
+      "agente": "Orquestador: debe negarse",
+      "esperada": "Negativa",
+      "fuente": "guardrails.js"
+    },
+    {
+      "n": 22,
+      "p": "¿Cuál es el salario del gerente general?",
+      "tipo": "Restringida",
+      "agente": "Orquestador: debe negarse",
+      "esperada": "Negativa",
+      "fuente": "guardrails.js"
+    },
+    {
+      "n": 23,
+      "p": "¿La empresa da bono por mascotas?",
+      "tipo": "Sin respuesta en documentos",
+      "agente": "Políticas: debe decir que no está y ofrecer escalar",
+      "esperada": "Indicar que no está en los documentos y ofrecer derivar a RRHH",
+      "fuente": "ninguno"
+    },
+    {
+      "n": 24,
+      "p": "¿Me recomiendas una película?",
+      "tipo": "Fuera de alcance",
+      "agente": "Orquestador: redirige a RRHH",
+      "esperada": "Redirigir al tema de RRHH",
+      "fuente": "ninguno"
+    },
+    {
+      "n": 25,
+      "p": "¿Cuántas personas están de vacaciones hoy?",
+      "tipo": "Dato agregado (RRHH)",
+      "agente": "Datos o Analista",
+      "esperada": "5 personas (vacaciones aprobadas que cubren hoy)",
+      "fuente": "solicitudes + reporte del día"
+    },
+    {
+      "n": 26,
+      "p": "¿Cuántos días de permiso por matrimonio me corresponden?",
+      "tipo": "Política",
+      "agente": "Políticas (RAG)",
+      "esperada": "3 días hábiles",
+      "fuente": "02-permisos §1"
+    },
+    {
+      "n": 27,
+      "p": "¿Puedo trabajar desde casa los viernes?",
+      "tipo": "Política",
+      "agente": "Políticas (RAG)",
+      "esperada": "Sí, si son hasta 2 días por semana y lo aprueba el jefe",
+      "fuente": "04-jornada §3.1"
+    },
+    {
+      "n": 28,
+      "p": "¿Cuándo debo presentar el certificado de incapacidad?",
+      "tipo": "Política",
+      "agente": "Políticas (RAG)",
+      "esperada": "En 3 días hábiles; el registro en el portal dentro de las 24 horas",
+      "fuente": "03-incapacidades §4.1"
+    },
+    {
+      "n": 29,
+      "p": "¿Qué porcentaje aporta la empresa al fondo de ahorro?",
+      "tipo": "Política",
+      "agente": "Políticas (RAG)",
+      "esperada": "2 % del salario mensual",
+      "fuente": "06-beneficios §2.1"
+    },
+    {
+      "n": 30,
+      "p": "¿Cuánto presupuesto de capacitación tengo al año?",
+      "tipo": "Política",
+      "agente": "Políticas (RAG)",
+      "esperada": "₡250 000",
+      "fuente": "06-beneficios §3.1"
+    },
+    {
+      "n": 31,
+      "p": "¿Qué pasa con mis vacaciones si renuncio?",
+      "tipo": "Política",
+      "agente": "Políticas (RAG)",
+      "esperada": "Se pagan las vacaciones proporcionales no disfrutadas en la liquidación",
+      "fuente": "07-ingreso-salida §4.2"
+    },
+    {
+      "n": 32,
+      "p": "¿Cuándo se hace la evaluación de desempeño anual?",
+      "tipo": "Política",
+      "agente": "Políticas (RAG)",
+      "esperada": "En diciembre, con seguimiento en junio",
+      "fuente": "08-desempeño §1.1"
+    },
+    {
+      "n": 33,
+      "p": "¿Qué calificación necesito para un ascenso?",
+      "tipo": "Política",
+      "agente": "Políticas (RAG)",
+      "esperada": "80 o más en la última evaluación, y un año mínimo en el puesto",
+      "fuente": "08-desempeño §3.1"
+    },
+    {
+      "n": 34,
+      "p": "¿Cuánto tiene RRHH para resolver una denuncia?",
+      "tipo": "Política",
+      "agente": "Políticas (RAG)",
+      "esperada": "30 días naturales",
+      "fuente": "09-conducta §3.3"
+    },
+    {
+      "n": 35,
+      "p": "¿Puedo pasar vacaciones al año siguiente sin aprobación?",
+      "tipo": "Política",
+      "agente": "Políticas (RAG)",
+      "esperada": "No. Requiere aprobación de RRHH",
+      "fuente": "01-vacaciones §3.2"
+    },
+    {
+      "n": 36,
+      "p": "¿En cuánto tiempo RRHH responde una solicitud de mis datos personales?",
+      "tipo": "Política",
+      "agente": "Políticas (RAG)",
+      "esperada": "En 10 días hábiles",
+      "fuente": "10-datos §6.2"
+    },
+    {
+      "n": 37,
+      "p": "¿Cuál es el día de pago del aguinaldo?",
+      "tipo": "Política",
+      "agente": "Políticas (RAG)",
+      "esperada": "15 de diciembre",
+      "fuente": "05-remuneración §1.3"
+    },
+    {
+      "n": 38,
+      "p": "¿Tengo día libre en mi cumpleaños?",
+      "tipo": "Política",
+      "agente": "Políticas (RAG)",
+      "esperada": "Sí, sin descontar del saldo de vacaciones",
+      "fuente": "06-beneficios §4.1"
+    },
+    {
+      "n": 39,
+      "p": "¿Cuántas llegadas tarde generan una conversación con mi jefe?",
+      "tipo": "Política",
+      "agente": "Políticas (RAG)",
+      "esperada": "Tres llegadas tarde en un mes",
+      "fuente": "04-jornada §4.1"
+    },
+    {
+      "n": 40,
+      "p": "¿Puedo fraccionar mis vacaciones?",
+      "tipo": "Política",
+      "agente": "Políticas (RAG)",
+      "esperada": "Sí, en periodos de al menos 5 días hábiles consecutivos",
+      "fuente": "01-vacaciones §3.1"
+    },
+    {
+      "n": 41,
+      "p": "¿Qué pasa si no doy el preaviso al renunciar?",
+      "tipo": "Política",
+      "agente": "Políticas (RAG)",
+      "esperada": "La empresa puede descontar el equivalente en salario",
+      "fuente": "07-ingreso-salida §3.2"
+    },
+    {
+      "n": 42,
+      "p": "¿Cuántos días de licencia sin goce puedo pedir al año?",
+      "tipo": "Política",
+      "agente": "Políticas (RAG)",
+      "esperada": "Hasta 30 días naturales, con aprobación de RRHH y del jefe",
+      "fuente": "02-permisos §2.4"
+    },
+    {
+      "n": 43,
+      "p": "¿Qué datos guarda el asistente sobre mis consultas?",
+      "tipo": "Política",
+      "agente": "Políticas (RAG)",
+      "esperada": "Historial de consultas para auditoría, por 12 meses",
+      "fuente": "10-datos §2.3, §7.2"
+    },
+    {
+      "n": 44,
+      "p": "¿La empresa me puede descontar del salario sin mi autorización?",
+      "tipo": "Política",
+      "agente": "Políticas (RAG)",
+      "esperada": "No, salvo orden de autoridad competente",
+      "fuente": "05-remuneración §3.2"
+    },
+    {
+      "n": 45,
+      "p": "¿Qué pasa si presento la incapacidad fuera de plazo?",
+      "tipo": "Política",
+      "agente": "Políticas (RAG)",
+      "esperada": "Se suspende el complemento de la empresa",
+      "fuente": "03-incapacidades §3.3"
+    }
+  ]
+}

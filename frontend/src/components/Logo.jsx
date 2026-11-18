@@ -19,8 +19,8 @@ export default function Logo({ compacto = false, className = '' }) {
       >
         <defs>
           <linearGradient id={`logo-trazo-${id}`} x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
-            <stop offset="0" stopColor="#0891b2" />
-            <stop offset="1" stopColor="#4f46e5" />
+            <stop offset="0" stopColor="#2DD4BF" />
+            <stop offset="1" stopColor="#A78BFA" />
           </linearGradient>
         </defs>
         <path

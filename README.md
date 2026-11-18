@@ -60,7 +60,6 @@ backend/
     services/           acceso a datos (SQL parametrizado, filtrado por el id autenticado)
     agents/             orquestador, guardrails, agente de datos, agente de políticas (RAG), analista
     jobs/               generación del reporte y programador de las 7:00 a. m.
-  scripts/aplicar-sql.js  Aplica archivos SQL a la base de DATABASE_URL
   tests/                Jest + Supertest (unitarias e integración)
   .env.example          Variables requeridas (copiar a .env; nunca subir .env)
 frontend/
@@ -94,30 +93,32 @@ Requisitos: **Node.js 20+** y una cuenta de Supabase con un proyecto creado.
 
 ### 3.1 Base de datos (Supabase)
 
-1. En el panel del proyecto: **Connect → Transaction pooler**. Copia el host, el usuario y el puerto `6543`.
-2. Crea `backend/.env` a partir de `backend/.env.example` y completa `DATABASE_URL`.
-   - La contraseña **debe ir codificada** en la URL: `&` → `%26`, `$` → `%24`, `/` → `%2F`, `@` → `%40`.
-   - El usuario tiene la forma `postgres.<ID_DEL_PROYECTO>`.
-3. Aplica el esquema **solo si la base está vacía**. Este paso borra tablas existentes:
-   - SQL Editor de Supabase → pegar `database/schema.sql` → **Run**.
-   - Alternativa desde `backend/`: `node scripts/aplicar-sql.js ../database/schema.sql`
-4. Aplica la migración y el volumen de datos (ambos seguros de repetir):
+El repositorio no contiene código que ejecute SQL. Las tablas se crean y cambian con los archivos de `database/`, pegados en el **SQL Editor** de Supabase y ejecutados en orden.
 
-   ```bash
-   cd backend
-   node scripts/aplicar-sql.js ../database/migrations/002_volumen_y_campos.sql ../database/seeds/002_datos_simulados.sql
+1. En el panel del proyecto: **Settings → API Keys**. Copia la URL del proyecto y la clave `service_role`.
+2. Crea `backend/.env` a partir de `backend/.env.example`:
+   - `SUPABASE_URL`: la URL del proyecto.
+   - `SUPABASE_SERVICE_ROLE_KEY`: la clave `service_role`. Solo va en `backend/.env`, nunca en el repositorio.
+   - `GOOGLE_APPLICATION_CREDENTIALS`, `DRIVE_FOLDER_ID` y `DEEPSEEK_API_KEY` según `.env.example`.
+3. Ejecuta los archivos de `database/` en el SQL Editor, en este orden. Cada uno es idempotente salvo el primero:
+   - `schema.sql`: **borra y recrea** las tablas. Solo en una base vacía.
+   - `migrations/002_volumen_y_campos.sql` y `seeds/002_datos_simulados.sql`.
+   - `migrations/003_rag_fragmentos.sql`.
+   - `migrations/004_rpc_busqueda_politicas.sql`.
+   - `migrations/005_tickets_escalamiento.sql`.
+   - `security/rol_solo_lectura.sql`: **no se usa** con la arquitectura actual. Se conserva como referencia.
+4. Verifica que los datos quedaron cargados:
+
+   ```sql
+   SELECT
+     (SELECT COUNT(*) FROM colaboradores) AS colaboradores,
+     (SELECT COUNT(*) FROM solicitudes)   AS solicitudes,
+     (SELECT COUNT(*) FROM calendario_pagos) AS pagos;
    ```
 
-   El seed se salta solo si ya existen colaboradores con el dominio `@simulado.innovacionescr.com`.
+El seed 002 se salta solo si ya existen colaboradores con el dominio `@simulado.innovacionescr.com`.
 
-5. Crea el rol de solo lectura del agente de datos. El script genera la contraseña, la guarda en `backend/.env` como `DATABASE_URL_LECTURA` y verifica que el rol puede leer pero no escribir. La contraseña no se muestra en pantalla.
-
-   ```bash
-   cd backend
-   node scripts/crear-rol-lectura.js
-   ```
-
-   Volver a ejecutarlo rota la contraseña del rol.
+Para cargar los fragmentos de las políticas desde Drive, después de la migración 003: `npm run rag:ingesta` (desde `backend/`).
 
 ### 3.2 Backend
 
@@ -139,11 +140,9 @@ Variables principales (ver `.env.example`):
 
 | Variable | Obligatoria | Descripción |
 | --- | --- | --- |
-| `DATABASE_URL` | Sí | Cadena de conexión de Supabase (pooler, puerto 6543) |
 | `DEEPSEEK_API_KEY` | Sí | Clave de la API de DeepSeek |
 | `PORT` | No | Puerto del backend (8000 por defecto) |
 | `CORS_ORIGINS` | No | Orígenes del frontend, separados por coma |
-| `DATABASE_URL_LECTURA` | Recomendada | Conexión del rol `agente_lectura` (la genera `scripts/crear-rol-lectura.js`) |
 | `REPORTE_AUTOMATICO` | No | `false` desactiva el reporte de las 7:00 a. m. |
 
 Pruebas:
