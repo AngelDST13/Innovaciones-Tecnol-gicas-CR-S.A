@@ -24,7 +24,7 @@ describe('agente de políticas (RAG)', () => {
     db.rpcs.buscar_fragmentos_politica = () => [fragmento(UMBRAL_SIMILITUD - 0.02)];
 
     const r = await responderPolitica('¿La empresa da bono por mascotas?');
-    expect(r).toEqual({ respuesta: MENSAJE_NO_ENCONTRADO, documentos: [], resuelta: false });
+    expect(r).toEqual({ respuesta: MENSAJE_NO_ENCONTRADO, documentos: [], resuelta: false, escalable: true });
     expect(deepseekCreate).not.toHaveBeenCalled();
   });
 

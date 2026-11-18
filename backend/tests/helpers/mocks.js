@@ -42,6 +42,14 @@ const SEED = {
   ],
   fragmentos_politica: [],
   documentos_politica: [],
+  calendario_pagos: [
+    { id: 1, fecha_pago: '2026-11-30', tipo: 'planilla_quincenal', descripcion: 'Pago de planilla (quincena)' },
+    { id: 2, fecha_pago: '2026-12-15', tipo: 'aguinaldo', descripcion: 'Pago del aguinaldo (décimo tercer mes)' },
+  ],
+  evaluaciones_desempeno: [
+    { id: 1, colaborador_id: 2, fecha_programada: '2026-12-04', estado: 'programada' },
+  ],
+  tickets_escalamiento: [],
 };
 
 export const db = new FakeSupabase(SEED);

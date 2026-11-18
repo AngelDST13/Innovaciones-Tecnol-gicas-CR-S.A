@@ -12,7 +12,7 @@ export async function registrarConsulta({ colaboradorId, pregunta, resultado, la
       intencion: resultado.intencion,
       agente: resultado.agente,
       resuelta: resultado.resuelta,
-      escalada: false,
+      escalada: resultado.escalada ?? false,
       latencia_ms: latenciaMs,
       documentos_citados: resultado.citas ?? [],
     })

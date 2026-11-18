@@ -1,14 +1,15 @@
 /**
  * Agente de políticas (RAG).
  *
- * Responde SOLO con los fragmentos recuperados de Drive. Si ningún fragmento supera el umbral
- * de similitud, dice que la política no está en los documentos y ofrece escalar a RRHH.
- * Cada respuesta cita documento y punto. Los datos marcados "por validar" se señalan como pendientes.
+ * Responde SOLO con los fragmentos recuperados de Drive. Si ningún fragmento supera el umbral de
+ * similitud, dice que la política no está en los documentos y marca el caso como escalable a RRHH.
+ * La respuesta pasa por el validador: si cita algo que no se recuperó, no se envía.
  *
  * Prompt versionado en docs/prompts/agente-politicas-rag-v1.md.
  */
 import { clienteDeepSeek, modeloDeepSeek } from '../config/deepseek.js';
 import { buscarFragmentos } from '../rag/recuperacion.js';
+import { validarRespuesta } from './validadorAgent.js';
 
 /**
  * Similitud mínima para considerar que un fragmento responde la pregunta.
@@ -45,14 +46,16 @@ function contextoFragmentos(fragmentos) {
     .join('\n\n');
 }
 
+function noEncontrado() {
+  return { respuesta: MENSAJE_NO_ENCONTRADO, documentos: [], resuelta: false, escalable: true };
+}
+
 /**
- * @returns {Promise<{respuesta: string, documentos: Array, resuelta: boolean}>}
+ * @returns {Promise<{respuesta: string, documentos: Array, resuelta: boolean, escalable: boolean}>}
  */
 export async function responderPolitica(pregunta) {
   const fragmentos = (await buscarFragmentos(pregunta)).filter((f) => f.similitud >= UMBRAL_SIMILITUD);
-  if (fragmentos.length === 0) {
-    return { respuesta: MENSAJE_NO_ENCONTRADO, documentos: [], resuelta: false };
-  }
+  if (fragmentos.length === 0) return noEncontrado();
 
   let respuesta;
   try {
@@ -66,11 +69,9 @@ export async function responderPolitica(pregunta) {
     });
     respuesta = salida.choices[0]?.message?.content?.trim();
   } catch {
-    return { respuesta: MENSAJE_NO_ENCONTRADO, documentos: [], resuelta: false };
+    return noEncontrado();
   }
-  if (!respuesta) {
-    return { respuesta: MENSAJE_NO_ENCONTRADO, documentos: [], resuelta: false };
-  }
+  if (!respuesta) return noEncontrado();
 
   // Citas formales: una por documento y punto usado, con enlace a Drive
   const vistas = new Set();
@@ -85,5 +86,8 @@ export async function responderPolitica(pregunta) {
       enlace: f.enlace,
     });
   }
-  return { respuesta, documentos, resuelta: true };
+
+  const validada = validarRespuesta({ respuesta, documentos });
+  if (!validada.valida) return noEncontrado();
+  return { respuesta: validada.respuesta, documentos, resuelta: true, escalable: false };
 }
