@@ -168,6 +168,13 @@ export async function guardarReporte({ fecha, datos, resumenTexto, generadoPor }
   return data;
 }
 
+/** ¿Ya existe el reporte de ese día? Lo usa el arranque para no repetir el reporte de hoy. */
+export async function existeReporte(fecha) {
+  const { data, error } = await supabase.from('reportes_diarios').select('id').eq('fecha', fecha).maybeSingle();
+  if (error) throw error;
+  return data !== null;
+}
+
 export async function listarReportes() {
   const { data, error } = await supabase
     .from('reportes_diarios')

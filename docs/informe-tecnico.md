@@ -46,7 +46,7 @@ flowchart LR
 | Agente de políticas (RAG) | Responde con citas de documentos | Búsqueda vectorial, LLM | **[PENDIENTE]** |
 | Agente de datos | Responde datos del propio colaborador | SQL fijo y parametrizado, filtrado por id | Implementado |
 | Agente analista | Genera el reporte diario | SQL de agregación, LLM para el resumen | Implementado |
-| Agente de ingesta | Sincroniza Drive con la base vectorial | Drive API (`changes.list`) | **[PENDIENTE]** |
+| Agente de ingesta | Sincroniza Drive con la base vectorial | Drive API (`changes.list`) | Hecho |
 
 El orquestador es el único que habla con el usuario. Los agentes de datos y de políticas no se llaman entre sí; el orquestador combina sus respuestas en las consultas mixtas.
 
@@ -84,9 +84,9 @@ Diseño propuesto, para validar con el banco de preguntas:
 
 La dimensión de la columna `vector` depende del modelo elegido. Por eso la migración 002 crea la extensión y los metadatos de documentos, pero no la tabla de fragmentos. Elegir un modelo multilingüe con buen soporte de español y fijar la dimensión antes de crear la tabla e índice HNSW.
 
-### 4.4 Sincronización con Drive **[PENDIENTE]**
+### 4.4 Sincronización con Drive
 
-La tabla `sync_drive_estado` guarda el `pageToken` de `changes.list`. La sincronización diaria detecta archivos nuevos, editados (por `fecha_modificacion`) y borrados (por el estado `eliminado`). Los fragmentos de un documento borrado se eliminan de la base vectorial.
+La tabla `sync_drive_estado` guarda el `pageToken` de `changes.list`. Cada sincronización pide solo los cambios desde ese token: archivos nuevos o modificados (por `modifiedTime`), archivos borrados, movidos fuera de la carpeta o enviados a la papelera. Los documentos que dejan de estar vigentes se marcan como eliminados y sus fragmentos se quitan de la base vectorial. La primera sincronización, o una en la que Drive rechaza el token vencido (HTTP 410), recorre la carpeta completa. El token nuevo se pide antes de listar, así que un cambio hecho durante la sincronización no se pierde.
 
 ## 5. Guardrails y seguridad
 
@@ -140,7 +140,7 @@ El agente analista calcula ocho elementos en SQL, según el spec:
 
 **Regla de verificación.** El resumen se acepta solo si todas sus cifras aparecen en el JSON de métricas. Si no, se usa una plantilla determinista. Durante las pruebas, el modelo confundió "colaboradores con más de 20 días disponibles" con ausencias, y ese error no lo detecta la verificación de cifras porque el número sí existe. Por eso el prompt incluye un glosario de campos.
 
-El reporte se genera a las 7:00 a. m. (hora de Costa Rica) mientras el backend esté en ejecución, o desde el botón del dashboard. El dashboard muestra cinco indicadores, la tendencia de 30 días, el gráfico de ausencias por tipo, la tabla de solicitudes pendientes, el resumen del día y el historial de reportes.
+El reporte se genera a las 7:00 a. m. (hora de Costa Rica) con un temporizador del proceso. Si el backend estaba apagado a esa hora, al arrancar genera el de ese día. Un programador externo puede llamar a `POST /api/v1/reportes/automatico` con el token `X-Token-Cron`, o ejecutar `npm run reporte:diario` desde el programador del sistema. Todas las vías respetan el reporte ya existente del día. También se puede generar desde el botón del dashboard. El dashboard muestra cinco indicadores, la tendencia de 30 días, el gráfico de ausencias por tipo, la tabla de solicitudes pendientes, el resumen del día y el historial de reportes.
 
 ## 8. Prompts de los agentes
 
@@ -152,18 +152,27 @@ Cada prompt está en `docs/prompts/` con su versión, su código de origen, sus 
 
 El banco tiene 45 preguntas: las 25 del spec y 20 propias del equipo. Cada una tiene respuesta esperada y fuente documental. La hoja `docs/hoja-evaluacion.md` registra la respuesta obtenida y el resultado. El criterio es el del spec: 80 % de aciertos (36 de 45), con cita en las respuestas de política y ninguna fuga de datos de terceros en las preguntas 21 y 22.
 
-### 9.2 Resultados **[PENDIENTE]**
+### 9.2 Resultados
 
-Al 17 de noviembre de 2026, **dos preguntas están verificadas**: la 21 y la 22, bloqueadas por el filtro determinista. Las demás requieren el agente de políticas o un agente de datos más completo, que aún no existen. **No se reportan porcentajes de acierto**, porque no se ha ejecutado el banco contra el sistema.
+El banco se ejecutó dos veces contra el sistema real (base Supabase, DeepSeek, RAG) con la versión final del código. Resultados: **39 de 45 (86.7 %)** en la primera corrida y **38 de 45 (84.4 %)** en la segunda. La diferencia de una pregunta viene de la variación de las respuestas del modelo, incluso con temperatura 0. Ambas superan el criterio del spec (80 %). La latencia p90 fue de 5.3 a 5.8 s, dentro del límite de 8 s.
 
-Cuando se ejecute, se registrarán para cada pregunta: la respuesta exacta, los fragmentos recuperados, el tiempo de respuesta y el resultado. Los resultados se presentarán con el número de aciertos y los fallos analizados por causa.
+Los fallos que se repiten en las dos corridas:
+
+- **3, 26 y 31:** el fragmento correcto puntúa entre 0.85 y 0.872. El umbral de 0.873 lo deja fuera. Bajarlo a 0.85 lo recupera, pero también deja pasar tres preguntas sin respuesta en los documentos (contraseña del wifi, película y bono de comida), que hoy sí se rechazan.
+- **34:** el fragmento con "30 días naturales" puntúa 0.859, por debajo del umbral. Es un fallo de recuperación.
+- **43:** el fragmento con "12 meses" llega primero con 0.879, pero la respuesta no incluye el plazo. Es un fallo de generación.
+- **45:** el fragmento sobre la suspensión del complemento no entra entre los 4 primeros candidatos. Es un fallo de recuperación.
+
+La pregunta 25 tenía una respuesta esperada equivocada en el banco ("5 personas"). Al contar las solicitudes aprobadas que cubren el día con una consulta independiente, el resultado es 4. Se corrigió la expectativa y queda registrado en la hoja.
+
+Cada ejecución registra la respuesta exacta, la cita y la latencia en `docs/evaluacion-resultados.json`, y genera `docs/hoja-evaluacion.md` con el veredicto de cada pregunta.
 
 ## 10. Limitaciones
 
-1. **Sin RAG**, el chat no responde preguntas de política con citas. Es el mayor pendiente y pesa en la rúbrica.
+1. **Recuperación con umbral estricto:** el umbral de 0.873 favorece no responder antes que responder mal. Tres preguntas de política válidas no se contestan por eso (ver 9.2).
 2. **Autenticación de desarrollo:** inicio de sesión por correo sin contraseña y cabecera `X-User-Id` sin firma. Cualquiera puede suplantar un id. No es apto para producción.
 3. **El backend usa el rol `postgres`**, que omite RLS. El agente de datos debería usar un rol de solo lectura.
-4. **Reporte automático dependiente del proceso:** si el backend no está en ejecución a las 7:00 a. m., el reporte no se genera ese día. Para producción conviene un scheduler externo.
+4. **Reporte automático:** el temporizador del proceso necesita que el backend esté encendido. Se cubre con el reporte al arrancar y con el programador externo (`POST /api/v1/reportes/automatico` o `npm run reporte:diario`). Un servicio que se duerme por inactividad sigue necesitando ese programador externo.
 5. **Legislación sin confirmar en su totalidad:** varias cifras (tabla de cesantía, duración del periodo de prueba, paternidad y expediente 25.049) requieren el texto oficial.
 6. **Políticas de la empresa:** los montos de beneficios (fondo de ahorro, presupuesto de capacitación) son propuestas del equipo y deben aprobarse.
 

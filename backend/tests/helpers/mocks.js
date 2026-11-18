@@ -40,8 +40,17 @@ const SEED = {
   reportes_diarios: [
     { id: 1, fecha: '2026-11-16', datos_json: { solicitudes_pendientes: 3, colaboradores_activos: 4 }, resumen_texto: 'Resumen de prueba', generado_por: 'agente_analista' },
   ],
-  fragmentos_politica: [],
-  documentos_politica: [],
+  fragmentos_politica: [
+    { id: 1, documento_id: 10, codigo: 'POL-CAL', contenido: '2026-01-01 · feriado · Año Nuevo · estado: confirmado' },
+    { id: 2, documento_id: 10, codigo: 'POL-CAL', contenido: '2026-12-01 · feriado · Abolición del Ejército · estado: por validar (confirmar si aplica en 2026)' },
+    { id: 3, documento_id: 10, codigo: 'POL-CAL', contenido: '2026-12-25 · feriado · Navidad · estado: confirmado' },
+    { id: 4, documento_id: 11, codigo: 'POL-01', contenido: 'Los colaboradores tienen 15 días hábiles de vacaciones por año.' },
+  ],
+  documentos_politica: [
+    { id: 10, drive_file_id: 'cal-2026', titulo: 'POL-CAL Calendario de feriados y pagos 2026', version: '—', enlace: 'https://drive.google.com/file/d/cal-2026/view', fecha_modificacion: '2026-11-01T00:00:00Z', eliminado: false },
+    { id: 11, drive_file_id: 'doc-1', titulo: 'POL-01 Vacaciones y feriados v2.1', version: '2.1', enlace: 'https://drive.google.com/file/d/doc-1/view', fecha_modificacion: '2026-11-01T00:00:00Z', eliminado: false },
+  ],
+  sync_drive_estado: [{ id: 1, page_token: 'tok-1', ultima_sync: null }],
   calendario_pagos: [
     { id: 1, fecha_pago: '2026-11-30', tipo: 'planilla_quincenal', descripcion: 'Pago de planilla (quincena)' },
     { id: 2, fecha_pago: '2026-12-15', tipo: 'aguinaldo', descripcion: 'Pago del aguinaldo (décimo tercer mes)' },
@@ -84,6 +93,11 @@ jest.unstable_mockModule('../../src/rag/embeddings.js', () => ({
   vectorizarFragmentos: async (textos) => textos.map(() => new Array(384).fill(0)),
   vectorizarPregunta: async () => new Array(384).fill(0),
   aTextoVector: (v) => `[${v.join(',')}]`,
+}));
+
+// Reformulación desactivada en las pruebas: no consume las respuestas preparadas del modelo
+jest.unstable_mockModule('../../src/rag/reformulacion.js', () => ({
+  reformularConsulta: async () => null,
 }));
 
 /** Respuesta con forma de chat completion de DeepSeek. */

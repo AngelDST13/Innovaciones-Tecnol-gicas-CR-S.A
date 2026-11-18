@@ -29,9 +29,11 @@ seguido de la pregunta del colaborador.
 
 ## Reglas que aplica el código (fuera del prompt)
 
-1. Se recuperan los 5 fragmentos más parecidos de documentos vigentes (no eliminados).
-2. Solo se usan los fragmentos con similitud ≥ 0.85. Si ninguno llega, se responde la negativa
-   con escalamiento y no se llama al modelo.
+1. La pregunta se busca dos veces: tal como la escribió el colaborador y reformulada en lenguaje de
+   política (una llamada corta al modelo, `rag/reformulacion.js`). Cada fragmento conserva su mejor similitud
+   y se recuperan los 5 más parecidos de documentos vigentes (no eliminados).
+2. Solo se usan los fragmentos con similitud ≥ 0.873 (calibrado con la reformulación activa).
+   Si ninguno llega, se responde la negativa con escalamiento y no se llama al modelo para responder.
 3. Las citas se construyen en el código (documento, sección, punto, enlace a Drive), no las escribe el modelo.
 
 ## Historial de cambios

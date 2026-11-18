@@ -15,6 +15,8 @@ import { responderPolitica } from './politicasAgent.js';
 import { responderPagos } from './pagosAgent.js';
 import { responderDesempeno } from './desempenoAgent.js';
 import { crearTicket, MOTIVOS } from './escalamientoAgent.js';
+import { responderFeriados } from './feriadosAgent.js';
+import { PATRON_AGREGADO_AUSENCIAS, responderAgregadoAusencias } from './agregadosAgent.js';
 
 export const INTENCIONES = Object.freeze(['politica', 'dato_personal', 'mixta', 'restringida', 'fuera_de_alcance']);
 
@@ -22,6 +24,7 @@ export class OrquestadorNoDisponible extends Error {}
 
 const PATRON_PAGOS = /\b(pag(o|os|ar|an|a)|planilla|cobran|aguinaldo|quincena)\b/i;
 const PATRON_DESEMPENO = /\b(evaluaci[oó]n|desempe[ñn]o)\b/i;
+const PATRON_FERIADOS = /\b(qu[eé]|cu[aá]les|cu[aá]ntos)\s+(\w+\s+)?feriados?\b|\bferiados?\s+(quedan|faltan|restan)\b|\bpr[oó]ximos?\s+feriados?\b/i;
 
 const PROMPT_CLASIFICADOR = `Eres el clasificador de intenciones del portal de RRHH de Innovaciones Tecnológicas CR S.A.
 Clasifica la pregunta del usuario en UNA de estas intenciones:
@@ -118,6 +121,13 @@ export async function procesarConsulta({ pregunta, usuario }) {
     return resultadoBloqueado('restringida');
   }
 
+  // Conteo de ausencias: solo RRHH, y sin pasar por el clasificador (cifras de la base)
+  if (PATRON_AGREGADO_AUSENCIAS.test(pregunta)) {
+    if (usuario.rol !== 'rrhh') return resultadoBloqueado('restringida');
+    const agregado = await responderAgregadoAusencias();
+    return { intencion: 'dato_personal', agente: 'datos', bloqueada: false, resuelta: true, escalada: false, respuesta: agregado.respuesta, citas: agregado.citas };
+  }
+
   const { intencion } = await clasificarIntencion(pregunta);
 
   if (intencion === 'restringida' || intencion === 'fuera_de_alcance') {
@@ -139,6 +149,10 @@ export async function procesarConsulta({ pregunta, usuario }) {
   }
 
   if (intencion === 'politica') {
+    if (PATRON_FERIADOS.test(pregunta)) {
+      const feriados = await responderFeriados();
+      return { intencion, agente: 'politicas', bloqueada: false, resuelta: true, escalada: false, respuesta: feriados.respuesta, citas: feriados.citas };
+    }
     return resultadoPolitica(intencion, pregunta, usuario);
   }
 

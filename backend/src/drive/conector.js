@@ -61,6 +61,40 @@ export async function listarCarpeta(carpetaId, drive = clienteDriveSoloLectura()
   return archivos;
 }
 
+/**
+ * Token de cambios (changes.getStartPageToken): a partir de él, changes.list devuelve solo lo nuevo.
+ * Se pide ANTES de listar la carpeta, así un cambio hecho durante la sincronización no se pierde.
+ */
+export async function tokenInicialDeCambios(drive = clienteDriveSoloLectura()) {
+  const respuesta = await drive.changes.getStartPageToken({ supportsAllDrives: true });
+  return respuesta.data.startPageToken;
+}
+
+/**
+ * Cambios desde un token (changes.list), con paginación. Incluye borrados (removed) y archivos en la papelera.
+ * @returns {Promise<{cambios: Array, nuevoToken: string}>} nuevoToken se guarda para la siguiente sincronización
+ */
+export async function listarCambios(pageToken, drive = clienteDriveSoloLectura()) {
+  const cambios = [];
+  let token = pageToken;
+  let nuevoToken = pageToken;
+  do {
+    const respuesta = await drive.changes.list({
+      pageToken: token,
+      spaces: 'drive',
+      includeRemoved: true,
+      supportsAllDrives: true,
+      includeItemsFromAllDrives: true,
+      pageSize: 100,
+      fields: 'nextPageToken, newStartPageToken, changes(fileId, removed, file(id, name, mimeType, modifiedTime, trashed, parents))',
+    });
+    cambios.push(...(respuesta.data.changes ?? []));
+    token = respuesta.data.nextPageToken ?? undefined;
+    if (!token) nuevoToken = respuesta.data.newStartPageToken ?? nuevoToken;
+  } while (token);
+  return { cambios, nuevoToken };
+}
+
 /** Extrae el texto de un archivo según su tipo. */
 export async function extraerTexto(archivo, drive = clienteDriveSoloLectura()) {
   if (archivo.mimeType === TIPO_DOC) {

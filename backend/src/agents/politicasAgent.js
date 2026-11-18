@@ -17,8 +17,14 @@ import { validarRespuesta } from './validadorAgent.js';
  *   - con respuesta en documentos: mínimo 0.871
  *   - sin respuesta en documentos: máximo 0.826
  * 0.85 queda a la mitad de la brecha, con margen en ambos lados. Exactitud de la calibración: 100 %.
+ *
+ * Recalibrado tras añadir la reformulación de la pregunta (rag/reformulacion.js), que sube también
+ * la similitud de algunas preguntas sin respuesta (contraseña del wifi 0.867, película 0.864):
+ *   - con respuesta en documentos: mínimo 0.880
+ *   - sin respuesta en documentos: máximo 0.867
+ * Punto medio de la brecha: 0.873. Exactitud de la calibración: 100 %.
  */
-export const UMBRAL_SIMILITUD = 0.85;
+export const UMBRAL_SIMILITUD = 0.873;
 
 export const MENSAJE_NO_ENCONTRADO =
   'No encontré esa política en los documentos oficiales. Puedo derivar tu consulta a una persona de ' +

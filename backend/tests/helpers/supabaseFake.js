@@ -132,8 +132,24 @@ class Consulta {
   }
 
   ilike(col, patron) {
-    const literal = patron.replace(/\\(.)/g, '$1').toLowerCase();
-    this.filtros.push((r) => String(r[col] ?? '').toLowerCase() === literal);
+    // Como PostgreSQL: % = cualquier secuencia, _ = un carácter, \x = x literal; sin distinguir mayúsculas
+    const escapar = (c) => c.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    let expresion = '';
+    for (let i = 0; i < patron.length; i += 1) {
+      const c = patron[i];
+      if (c === '\\' && i + 1 < patron.length) {
+        expresion += escapar(patron[i + 1]);
+        i += 1;
+      } else if (c === '%') {
+        expresion += '.*';
+      } else if (c === '_') {
+        expresion += '.';
+      } else {
+        expresion += escapar(c);
+      }
+    }
+    const regex = new RegExp(`^${expresion}$`, 'is');
+    this.filtros.push((r) => regex.test(String(r[col] ?? '')));
     return this;
   }
 

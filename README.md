@@ -28,21 +28,22 @@ Esta tabla es la fuente de verdad. Lo que no esté marcado como **Hecho** no fun
 | Filtro determinista de preguntas restringidas (21 y 22) | ✅ Hecho y verificado en vivo |
 | Orquestador con clasificación por DeepSeek y falla cerrada | ✅ Hecho |
 | Reporte diario con 8 elementos, cifras por SQL y resumen verificado | ✅ Hecho |
-| Reporte automático a las 7:00 a. m. (hora de Costa Rica) | ✅ Hecho (mientras el backend esté encendido) |
+| Reporte automático a las 7:00 a. m. (hora de Costa Rica) | ✅ Hecho: temporizador del proceso, reporte al arrancar si falta, `POST /api/v1/reportes/automatico` (token `X-Token-Cron`) y `npm run reporte:diario` para un programador externo |
 | Dashboard con KPIs, tendencia 30 días, 2 gráficos, pendientes, resumen e historial | ✅ Hecho |
 | Chat con respuestas, intención y latencia | ✅ Hecho |
 | Login con roles, CORS, latencia (`X-Latencia-Ms`), errores sin filtrar detalles | ✅ Hecho |
-| Agente de **políticas (RAG)**: responder solo con fragmentos de Drive y citar documento y punto | ✅ Hecho: 147 fragmentos indexados; umbral de similitud 0.84 (provisional) |
+| Agente de **políticas (RAG)**: responder solo con fragmentos de Drive y citar documento y punto | ✅ Hecho: 147 fragmentos indexados; búsqueda con reformulación de la pregunta; umbral de similitud 0.873 (calibrado) |
 | Documentos de políticas (≥10) en Drive | ✅ Hecho: 11 archivos verificados (`npm run drive:verify`); investigación en `docs/investigacion-rrhh.md` |
-| Sincronización con Drive: nuevos, editados y borrados | ✅ Hecho: incremental por `modifiedTime` (`npm run rag:ingesta`); `changes.list` pendiente de usar |
+| Sincronización con Drive: nuevos, editados y borrados | ✅ Hecho: `changes.list` desde el `pageToken` de `sync_drive_estado` (`npm run rag:ingesta`); sincronización completa solo la primera vez o si el token vence |
 | Embeddings y fragmentos en pgvector | ✅ Hecho: `multilingual-e5-small` (384 dim.), migración 003, índice HNSW |
-| Pagos (pregunta 9) y evaluaciones (pregunta 17) respondidas por el agente de datos | ⚠️ Datos cargados; el agente aún no los consulta |
+| Pagos (pregunta 9) y evaluaciones (pregunta 17) respondidas por sus agentes | ✅ Hecho: agentes de pagos y de desempeño |
+| Feriados (pregunta 20) y conteo de ausencias para RRHH (pregunta 25) | ✅ Hecho: feriados desde el calendario oficial; conteo solo para el rol rrhh |
 | Usuario de solo lectura para el agente de datos (`agente_lectura`) | ✅ Hecho: solo `SELECT`, sujeto a RLS; la contraseña se generó y se guardó solo en `backend/.env` |
-| Agente de escalamiento con tickets (punto extra) | ❌ Pendiente |
-| Banco de 45 preguntas evaluado y resultados | ❌ Pendiente (ver `docs/hoja-evaluacion.md`) |
+| Agente de escalamiento con tickets (punto extra) | ✅ Hecho: tickets en `tickets_escalamiento` cuando la política no está en los documentos |
+| Banco de 45 preguntas evaluado y resultados | ✅ Ejecutado: 38 a 39 de 45 aciertos (84–87 %) según la corrida; detalle en `docs/hoja-evaluacion.md` |
 | Informe técnico 8–12 páginas, diagrama, video de demo | ⚠️ Borrador (`docs/informe-tecnico.md`); diagrama y video pendientes |
 
-**Lo más importante que falta** es calibrar el RAG con el banco de 45 preguntas y completar la hoja de evaluación; el umbral de similitud es provisional.
+**Lo que falta** está en la sección 7: seis preguntas del banco todavía fallan (3, 26, 31, 34, 43 y 45) y el umbral sube un poco la exigencia para el RAG.
 
 ---
 
@@ -144,11 +145,12 @@ Variables principales (ver `.env.example`):
 | `PORT` | No | Puerto del backend (8000 por defecto) |
 | `CORS_ORIGINS` | No | Orígenes del frontend, separados por coma |
 | `REPORTE_AUTOMATICO` | No | `false` desactiva el reporte de las 7:00 a. m. |
+| `REPORTE_CRON_TOKEN` | No | Token para `POST /api/v1/reportes/automatico` (cabecera `X-Token-Cron`). Sin él, la ruta no existe |
 
 Pruebas:
 
 ```bash
-npm test                      # 65 pruebas: unitarias e integración, sin base real ni red
+npm test                      # 98 pruebas: unitarias e integración, sin base real ni red
 ```
 
 ### 3.3 Frontend
@@ -226,9 +228,8 @@ Códigos de error: `400` datos inválidos · `401` falta identidad · `403` rol 
 
 ## 7. Pendientes, en orden de prioridad
 
-1. **Drive + ingesta + RAG:** cuenta de servicio de Google Cloud, carpeta compartida, documentos de política con metadatos (título, versión, vigencia, responsable), fragmentación, embeddings y fragmentos en pgvector, y el agente de políticas con citas.
-2. **Sincronización diaria con Drive** usando `changes.list` y el estado guardado en `sync_drive_estado`.
-3. **Agente de datos** para pagos (`calendario_pagos`) y evaluaciones (`evaluaciones_desempeno`).
-4. **Evaluación:** ejecutar el banco de 45 preguntas y completar `docs/hoja-evaluacion.md`.
-5. **Informe técnico final y diagrama de arquitectura.**
-6. **Autenticación real** (JWT) antes de cualquier despliegue fuera del entorno de desarrollo.
+1. **Recuperación del RAG:** las preguntas 3, 26, 31, 34, 43 y 45 del banco siguen fallando. En 3, 26, 31 y 34 el fragmento correcto queda por debajo del umbral 0.873 o fuera de los primeros candidatos (recuperación). En 45 el fragmento no entra al top 4. En 43 el fragmento correcto sí llega, pero la respuesta omite el plazo (generación). Requiere revisar el umbral con un banco de calibración más grande.
+2. **Estabilidad de la evaluación:** la corrida del banco no es idéntica entre ejecuciones (preguntas 19 y 30 cambiaron). Conviene fijar la respuesta esperada con datos más precisos.
+3. **Índice HNSW:** verificarlo en el SQL Editor (`SELECT indexname FROM pg_indexes WHERE tablename = 'fragmentos_politica';`).
+4. **Autenticación real** (JWT) antes de cualquier despliegue fuera del entorno de desarrollo.
+5. **Rotación de claves:** la clave de DeepSeek y la clave service_role de Supabase aparecieron en la conversación de trabajo; se recomienda rotarlas.

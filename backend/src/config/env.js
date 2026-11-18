@@ -45,4 +45,6 @@ export const env = Object.freeze({
 
   // Reporte diario automático a las 7:00 a. m. (hora de Costa Rica). Desactivar con REPORTE_AUTOMATICO=false.
   reporteAutomatico: booleano('REPORTE_AUTOMATICO', true),
+  // Token para que un programador externo (cron, Task Scheduler, n8n) dispare el reporte. Sin token, la ruta no existe.
+  reporteToken: process.env.REPORTE_CRON_TOKEN?.trim() || null,
 });
