@@ -37,5 +37,5 @@ seguido de la pregunta del colaborador.
 ## Historial de cambios
 
 | Versión | Fecha | Cambio |
-|---|---|---|
+| --- | --- | --- |
 | v1.0 | 17/11/2026 | Versión inicial con recuperación vectorial y citas. |

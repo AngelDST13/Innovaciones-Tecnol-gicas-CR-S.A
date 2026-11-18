@@ -9,7 +9,7 @@ Registro de los archivos subidos a Drive para el pipeline de ingesta. Los IDs no
 - **Acceso:** privado. Ningún archivo tiene enlace público.
 
 | Archivo original | Nombre en Drive | Formato | ID del archivo | Verificado |
-|---|---|---|---|---|
+| --- | --- | --- | --- | --- |
 | 01-vacaciones-y-feriados.md | POL-01 Vacaciones y feriados v2.1.pdf | PDF | `1IMmOkpYcLfFw4FhDORz4ATjLTchwC95o` | Sí |
 | 02-permisos-y-licencias.md | POL-02 Permisos y licencias v1.4 | Google Doc | `1PC-JTbZhi_RrWVMKZINBfS1gaspHeYs36p6N77OKFTg` | Sí |
 | 03-incapacidades.md | POL-03 Incapacidades v1.2 | Google Doc | `1BCKBwHElBzZz4a9IkRC_x96HMfSC3U1aJ13OCZBOcIo` | Sí (pendiente: duda reportada en la tabla) |
